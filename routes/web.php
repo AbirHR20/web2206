@@ -4,6 +4,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\UserController;
@@ -62,5 +63,14 @@ Route::post('subcategory/update/{id}',[SubcategoryController::class,'subcategory
 Route::get('subcategory/delete/{id}',[SubcategoryController::class,'subcategory_delete'])->name('subcategory.delete');
 
 //brand
-Route::get('brand',[BrandController::class,'brand'])->name('brand');
+Route::get('brand/',[BrandController::class,'brand'])->name('brand');
 Route::post('brand/store',[BrandController::class,'brand_store'])->name('brand.store');
+Route::get('brand/edit/{id}',[BrandController::class,'brand_edit'])->name('brand.edit');
+Route::post('brand/update/{id}',[BrandController::class,'brand_update'])->name('brand.update');
+Route::get('brand/delete/{id}',[BrandController::class,'brand_delete'])->name('brand.delete');
+
+//product
+Route::get('product',[ProductController::class,'product'])->name('product');
+Route::post('getSubcategory',[ProductController::class,'getSubcategory'])->name('getSubcategory');
+Route::post('product/store',[ProductController::class,'product_store'])->name('product.store');
+Route::get('product/list',[ProductController::class,'product_list'])->name('product.list');

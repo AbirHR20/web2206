@@ -1,6 +1,9 @@
 @extends('layouts.admin')
 @section('content')
     <div class="col-lg-8">
+        @if (session('delete'))
+            <div class="alert alert-success">{{ session('delete') }}</div>
+        @endif
         <div class="card">
             <div class="card-header">
                 <h3>Brand List</h3>
@@ -20,10 +23,10 @@
                             <td><img src="{{ asset('uploads/brand/') }}/{{ $brands->brand_logo }}" width="50" alt=""></td>
                             <td>
                                 <div class="d-flex">
-                                    <a href=""
+                                    <a href="{{ route('brand.edit',$brands->id) }}"
                                         class="btn btn-primary shadow btn-xs sharp mr-1"><i
                                             class="fa fa-pencil"></i></a>
-                                    <a href="z"
+                                    <a href="{{ route('brand.delete',$brands->id) }}"
                                         class="btn btn-danger shadow btn-xs sharp"><i
                                             class="fa fa-trash"></i></a>
                                 </div>
@@ -55,10 +58,13 @@
                     </div>
                     <div class="mb-3">
                         <label for="" class="form-label">Brand Logo</label>
-                        <input type="file" name="brand_logo" class="form-control">
+                        <input type="file" name="brand_logo" class="form-control" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
                         @error('brand_logo')
                             <strong class="text-danger">{{ $message }}</strong>
                         @enderror
+                    </div>
+                    <div class="my-2">
+                        <img src="" alt="" width="100px" id="blah">
                     </div>
                     <div class="mb-3">
                         <button type="submit" class="btn btn-primary">Add Brand</button>
