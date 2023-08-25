@@ -450,6 +450,7 @@
                         <ul aria-expanded="false">
                             <li><a href="{{ route('product') }}">Add New Product</a></li>
                             <li><a href="{{ route('product.list') }}">Product List</a></li>
+                            <li><a href="{{ route('variation') }}">Product variation</a></li>
                         </ul>
                     </li>
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">

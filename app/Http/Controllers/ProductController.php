@@ -53,6 +53,7 @@ class ProductController extends Controller
             'product_discount' => $request->product_discount,
             'after_product_discount' => $request->product_price - ($request->product_price * $request->product_discount / 100),
             'tages' => $after_implode,
+            'short_desp'=> $request->short_desp,
             'long_desp' => $request->long_desp,
             'preview' => $file_name,
             'slug' => Str::lower(str_replace('', '-', $request->product_name)) . '-' . random_int(10000000, 90000000),
@@ -73,6 +74,27 @@ class ProductController extends Controller
         $products = Product::all();
         return view('admin.product.list',[
             'products'=>$products,
+        ]);
+    }
+    function product_delete($id) {
+        $product = Product::find($id);
+        $gallery = ProductGallery::where('product_id',$id)->get();
+        $preview = public_path('uploads/product/preview/'.$product->preview);
+        unlink($preview);
+        foreach ($gallery as $gal) {
+            $gal_img = public_path('uploads/product/gallery/'.$gal->gallery);
+            unlink($gal_img);
+            ProductGallery::find($gal->id)->delete();
+        }
+        Product::find($id)->delete();
+        return back();
+    }
+    function product_show($id) {
+        $product = Product::find($id);
+        $galleries = ProductGallery::where('product_id',$id)->get();
+        return view('admin.product.show',[
+            'product'=>$product,
+            'galleries'=>$galleries,
         ]);
     }
 }
