@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Gymove - Fitness Bootstrap Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
     <link rel="stylesheet"
@@ -130,10 +131,9 @@
             Nav header start
         ***********************************-->
         <div class="nav-header">
-            <a href="index.html" class="brand-logo">
-                <img class="logo-abbr" src="{{ asset('backend') }}/images/logo.png" alt="">
-                <img class="logo-compact" src="{{ asset('backend') }}/images/logo-text.png" alt="">
-                <img class="brand-title" src="{{ asset('backend') }}/images/logo-text.png" alt="">
+            <a href="{{ route('dashboard') }}" class="brand-logo">
+                <img class="logo-compact" src="{{ asset('front/images/logo.svg') }}" alt="">
+                <img class="brand-title" src="{{ asset('front/images/logo.svg') }}" alt="">
             </a>
 
             <div class="nav-control">
@@ -453,43 +453,7 @@
                             <li><a href="{{ route('variation') }}">Product variation</a></li>
                         </ul>
                     </li>
-                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-                            <i class="flaticon-381-network"></i>
-                            <span class="nav-text">Table</span>
-                        </a>
-                        <ul aria-expanded="false">
-                            <li><a href="table-bootstrap-basic.html">Bootstrap</a></li>
-                            <li><a href="table-datatable-basic.html">Datatable</a></li>
-                        </ul>
-                    </li>
-                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-                            <i class="flaticon-381-layer-1"></i>
-                            <span class="nav-text">Pages</span>
-                        </a>
-                        <ul aria-expanded="false">
-                            <li><a href="./page-register.html">Register</a></li>
-                            <li><a href="./page-login.html">Login</a></li>
-                            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Error</a>
-                                <ul aria-expanded="false">
-                                    <li><a href="./page-error-400.html">Error 400</a></li>
-                                    <li><a href="./page-error-403.html">Error 403</a></li>
-                                    <li><a href="./page-error-404.html">Error 404</a></li>
-                                    <li><a href="./page-error-500.html">Error 500</a></li>
-                                    <li><a href="./page-error-503.html">Error 503</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="./page-lock-screen.html">Lock Screen</a></li>
-                        </ul>
-                    </li>
                 </ul>
-                <div class="add-menu-sidebar">
-                    <img src="images/calendar.png" alt="" class="mr-3">
-                    <p class="	font-w500 mb-0">Create Workout Plan Now</p>
-                </div>
-                <div class="copyright">
-                    <p><strong>Gymove Fitness Admin Dashboard</strong> © 2020 All Rights Reserved</p>
-                    <p>Made with <span class="heart"></span> by DexignZone</p>
-                </div>
             </div>
         </div>
         <!--**********************************

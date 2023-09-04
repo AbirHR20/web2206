@@ -22,7 +22,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/',[FrontendController::class,'index']);
+//frontend
+Route::get('/',[FrontendController::class,'index'])->name('index');
+Route::get('/category/products/{id}',[FrontendController::class,'category_products'])->name('category.products');
+Route::get('/subcategory/products/{id}',[FrontendController::class,'subcategory_products'])->name('subcategory.products');
+Route::get('/product/details/{slug}',[FrontendController::class,'products_details'])->name('products.details');
 
 Route::get('/dashboard', [HomeController::class,'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -79,6 +83,7 @@ Route::get('product/delete/{id}',[ProductController::class,'product_delete'])->n
 Route::get('product/show/{id}',[ProductController::class,'product_show'])->name('product.show');
 Route::get('product/inventory/{id}',[InventoryController::class,'inventory'])->name('inventory');
 Route::post('product/inventory/store/{id}',[InventoryController::class,'inventory_store'])->name('inventory.store');
+Route::get('product/inventory/remove/{id}',[InventoryController::class,'inventory_remove'])->name('inventory.remove');
 
 
 //product variation
@@ -87,3 +92,4 @@ Route::post('color/store',[InventoryController::class,'color_store'])->name('col
 Route::post('size/store',[InventoryController::class,'size_store'])->name('size.store');
 Route::get('color/remove/{id}',[InventoryController::class,'color_remove'])->name('color.remove');
 Route::get('size/remove/{id}',[InventoryController::class,'size_remove'])->name('size.remove');
+Route::post('/changeStatus',[ProductController::class,'changeStatus'])->name('changeStatus');

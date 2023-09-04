@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductRequest;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Inventory;
 use App\Models\Product;
 use App\Models\ProductGallery;
 use App\Models\Subcategory;
@@ -55,6 +56,7 @@ class ProductController extends Controller
             'tages' => $after_implode,
             'short_desp'=> $request->short_desp,
             'long_desp' => $request->long_desp,
+            'add_info' => $request->add_info,
             'preview' => $file_name,
             'slug' => Str::lower(str_replace('', '-', $request->product_name)) . '-' . random_int(10000000, 90000000),
             'created_at' => Carbon::now(),
@@ -87,6 +89,12 @@ class ProductController extends Controller
             ProductGallery::find($gal->id)->delete();
         }
         Product::find($id)->delete();
+
+        $inventories = Inventory::where('product_id',$id)->get();
+        foreach ($inventories as  $inventory) {
+            Inventory::find($inventory->id)->delete();
+        }
+
         return back();
     }
     function product_show($id) {
@@ -95,6 +103,11 @@ class ProductController extends Controller
         return view('admin.product.show',[
             'product'=>$product,
             'galleries'=>$galleries,
+        ]);
+    }
+    function changeStatus(Request $request) {
+        Product::find($request->product_id)->update([
+            'status'=>$request->status,
         ]);
     }
 }

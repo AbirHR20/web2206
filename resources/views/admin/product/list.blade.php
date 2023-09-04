@@ -10,8 +10,8 @@
                 <table class="table table-bordered">
                     <tr>
                         <th>SL</th>
-                        <th>Category</th>
-                        <th>Sub Category</th>
+                        {{-- <th>Category</th>
+                        <th>Sub Category</th> --}}
                         <th>Brand</th>
                         <th>Product Name</th>
                         <th>Price</th>
@@ -23,8 +23,10 @@
                     @foreach ($products as $sl => $product)
                         <tr>
                             <td>{{ $sl + 1 }}</td>
-                            <td>{{ $product->rel_to_cate->category_name }}</td>
-                            <td>{{ $product->rel_to_subcate->subcategory_name }}</td>
+                            <td><input data-id="{{ $product->id }}" {{ $product->status == 1?'checked':'' }} class="check" type="checkbox" data-toggle="toggle"
+                                    data-size="sm" value="{{ $product->status }}"></td>
+                            {{-- <td>{{ $product->rel_to_cate->category_name }}</td>
+                            <td>{{ $product->rel_to_subcate->subcategory_name }}</td> --}}
                             <td>{{ $product->rel_to_brand->brand_name }}</td>
                             <td>{{ $product->product_name }}</td>
                             <td>{{ $product->product_price }}</td>
@@ -51,4 +53,34 @@
             </div>
         </div>
     </div>
+@endsection
+@section('footer_script')
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+    <script>
+        $('.check').change(function() {
+            if ($(this).val() == 1) {
+                $(this).attr('value', 0)
+            } else {
+                $(this).attr('value', 1)
+            }
+            var status = $(this).val();
+            var product_id = $(this).attr('data-id');
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: '/changeStatus',
+                data: {
+                    'product_id': product_id,
+                    'status': status,
+                },
+                success: function(data) {
+                    
+                }
+            });
+        })
+    </script>
 @endsection

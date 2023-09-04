@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+    protected $guarded = ['id'];
     use HasFactory;
     function rel_to_cate() {
         return $this->belongsTo(Category::class,'category_id');
