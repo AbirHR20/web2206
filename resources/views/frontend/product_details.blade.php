@@ -73,10 +73,23 @@
                                     <span>Color :</span>
                                     <ul>
                                         @foreach ($avilable_colors as $avilable_color)
-                                            <li class=""><input id="color{{ $avilable_color->color_id }}" type="radio" name="color_id"
-                                                    value="30">
-                                                <label style="background-color: {{ $avilable_color->rel_to_color->color_name }}" for="color{{ $avilable_color->color_id }}"></label>
-                                            </li>
+                                            @if ($avilable_color->rel_to_color->color_name == 'NA')
+                                                <li class=""><input id="color{{ $avilable_color->color_id }}"
+                                                        type="radio" name="color_id"
+                                                        value="{{ $avilable_color->color_id }}">
+                                                    <label
+                                                        style="background-color: transparent; font-size:13px; border:2px solid #000; text-align:center; line-height:26px;"
+                                                        for="color{{ $avilable_color->color_id }}">{{ $avilable_color->rel_to_color->color_name }}</label>
+                                                </li>
+                                            @else
+                                                <li class=""><input id="color{{ $avilable_color->color_id }}"
+                                                        type="radio" name="color_id"
+                                                        value="{{ $avilable_color->color_id }}">
+                                                    <label
+                                                        style="background-color: {{ $avilable_color->rel_to_color->color_name }}"
+                                                        for="color{{ $avilable_color->color_id }}"></label>
+                                                </li>
+                                            @endif
                                         @endforeach
                                     </ul>
                                 </div>
@@ -85,26 +98,18 @@
                                 <div class="color-name">
                                     <span>Sizes:</span>
                                     <ul>
-                                        <li class="color"><input id="sz1" type="radio" name="size"
-                                                value="30">
-                                            <label for="sz1">S</label>
-                                        </li>
-                                        <li class="color"><input id="sz2" type="radio" name="size"
-                                                value="30">
-                                            <label for="sz2">M</label>
-                                        </li>
-                                        <li class="color"><input id="sz3" type="radio" name="size"
-                                                value="30">
-                                            <label for="sz3">L</label>
-                                        </li>
-                                        <li class="color"><input id="sz4" type="radio" name="size"
-                                                value="30">
-                                            <label for="sz4">X</label>
-                                        </li>
-                                        <li class="color"><input id="sz5" type="radio" name="size"
-                                                value="30">
-                                            <label for="sz5">XL</label>
-                                        </li>
+                                        @foreach ($avilable_sizes as $avilable_size)
+                                            <li class=""><input id="size{{ $avilable_size->size_id }}" type="radio"
+                                                    name="size_id" value="{{ $avilable_size->size_id }}">
+                                                <label title="{{ $avilable_size->rel_to_size->size_name }}" for="size{{ $avilable_size->size_id }}">
+                                                    @if (Str::length($avilable_size->rel_to_size->size_name) > 3)
+                                                        {{ Str::substr($avilable_size->rel_to_size->size_name, 0, 3) . '..' }}
+                                                    @else
+                                                        {{ $avilable_size->rel_to_size->size_name }}
+                                                    @endif
+                                                </label>
+                                            </li>
+                                        @endforeach
                                     </ul>
                                 </div>
                             </div>
@@ -137,9 +142,9 @@
                             (3)</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="Information-tab" data-bs-toggle="pill"
-                            data-bs-target="#Information" type="button" role="tab" aria-controls="Information"
-                            aria-selected="false">Additional info</button>
+                        <button class="nav-link" id="Information-tab" data-bs-toggle="pill" data-bs-target="#Information"
+                            type="button" role="tab" aria-controls="Information" aria-selected="false">Additional
+                            info</button>
                     </li>
                 </ul>
                 <div class="tab-content">
