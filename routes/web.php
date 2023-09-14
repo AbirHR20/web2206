@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CustomerAuthController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InventoryController;
@@ -27,6 +30,8 @@ Route::get('/',[FrontendController::class,'index'])->name('index');
 Route::get('/category/products/{id}',[FrontendController::class,'category_products'])->name('category.products');
 Route::get('/subcategory/products/{id}',[FrontendController::class,'subcategory_products'])->name('subcategory.products');
 Route::get('/product/details/{slug}',[FrontendController::class,'products_details'])->name('products.details');
+Route::post('/getSize',[FrontendController::class,'getSize']);
+Route::post('/getQuantity',[FrontendController::class,'getQuantity']);
 
 Route::get('/dashboard', [HomeController::class,'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -93,3 +98,15 @@ Route::post('size/store',[InventoryController::class,'size_store'])->name('size.
 Route::get('color/remove/{id}',[InventoryController::class,'color_remove'])->name('color.remove');
 Route::get('size/remove/{id}',[InventoryController::class,'size_remove'])->name('size.remove');
 Route::post('/changeStatus',[ProductController::class,'changeStatus'])->name('changeStatus');
+
+//customer
+Route::get('/customer/login',[CustomerAuthController::class,'customer_login'])->name('customer.login');
+Route::get('/customer/register',[CustomerAuthController::class,'customer_register'])->name('customer.register');
+Route::post('/customer/store',[CustomerAuthController::class,'customer_store'])->name('customer.store');
+Route::post('/customer/login/confirm',[CustomerAuthController::class,'customer_login_confirm'])->name('customer.login.confirm');
+Route::get('/customer/profile',[CustomerController::class,'customer_profile'])->name('customer.profile')->middleware('customer');
+Route::get('/customer/logout',[CustomerController::class,'customer_logout'])->name('customer.logout');
+Route::post('/customer/profile/update',[CustomerController::class,'customer_profile_update'])->name('customer.profile.update');
+
+//cart
+Route::post('/cart/store',[CartController::class,'cart_store'])->name('cart.store');

@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="wpOceans">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" type="image/png" href="{{ asset('front') }}/images/favicon.png">
     <title>Themart - eCommerce HTML5 Template</title>
     <link href="{{ asset('front') }}/css/themify-icons.css" rel="stylesheet">
@@ -125,8 +126,15 @@
                                     <li><a href="compare.html"><i
                                                 class="fi flaticon-right-and-left"></i><span>Compare</span></a>
                                     </li>
-                                    <li><a href="login.html"><i
-                                                class="fi flaticon-user-profile"></i><span>Login</span></a></li>
+                                    <li>
+                                        @auth('customer')
+                                            <a href="{{ route('customer.profile') }}"><i
+                                                    class="fi flaticon-user-profile"></i><span>{{ Auth::guard('customer')->user()->fname }}</span></a>
+                                        @else
+                                            <a href="{{ route('customer.login') }}"><i
+                                                    class="fi flaticon-user-profile"></i><span>Login</span></a>
+                                        @endauth
+                                    </li>
                                     <li>
                                         <div class="header-wishlist-form-wrapper">
                                             <button class="wishlist-toggle-btn"> <i class="fi flaticon-heart"></i>
@@ -261,11 +269,13 @@
                                         <ul id="metis-menu">
                                             @foreach (App\Models\Category::all() as $category)
                                                 <li class="header-catagory-item">
-                                                    <a class="menu-down-{{ App\Models\Subcategory::where('category_id',$category->id)->count() != 0 ? 'arrow' : '' }}"
-                                                        >{{ $category->category_name }}</a>
+                                                    <a
+                                                        class="menu-down-{{ App\Models\Subcategory::where('category_id', $category->id)->count() != 0 ? 'arrow' : '' }}">{{ $category->category_name }}</a>
                                                     <ul class="header-catagory-single">
-                                                        @foreach (App\Models\Subcategory::where('category_id',$category->id)->get() as $subcategory)
-                                                            <li><a href="{{ route('subcategory.products',$subcategory->id) }}">{{ $subcategory->subcategory_name }}</a></li>
+                                                        @foreach (App\Models\Subcategory::where('category_id', $category->id)->get() as $subcategory)
+                                                            <li><a
+                                                                    href="{{ route('subcategory.products', $subcategory->id) }}">{{ $subcategory->subcategory_name }}</a>
+                                                            </li>
                                                         @endforeach
                                                     </ul>
                                                 </li>
@@ -464,6 +474,7 @@
     <script src="{{ asset('front') }}/js/jquery-plugin-collection.js"></script>
     <!-- Custom script for this template -->
     <script src="{{ asset('front') }}/js/script.js"></script>
+    @yield('footer_script')
 </body>
 
 </html>

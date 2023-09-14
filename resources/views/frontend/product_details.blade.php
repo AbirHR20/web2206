@@ -22,112 +22,123 @@
     <div class="product-single-section section-padding">
         <div class="container">
             <div class="product-details">
-                <div class="row align-items-center">
-                    <div class="col-lg-5">
-                        <div class="product-single-img">
-                            <div class="product-active owl-carousel">
-                                @foreach (App\Models\ProductGallery::where('product_id', $product_details->id)->get() as $gallery)
-                                    <div class="item">
-                                        <img src="{{ asset('uploads/product/gallery') }}/{{ $gallery->gallery }}"
-                                            alt="">
-                                    </div>
-                                @endforeach
+                <form action="{{ route('cart.store') }}" method="post">
+                    @csrf
+                    <div class="row align-items-center">
+                        <div class="col-lg-5">
+                            <div class="product-single-img">
+                                <div class="product-active owl-carousel">
+                                    @foreach (App\Models\ProductGallery::where('product_id', $product_details->id)->get() as $gallery)
+                                        <div class="item">
+                                            <img src="{{ asset('uploads/product/gallery') }}/{{ $gallery->gallery }}"
+                                                alt="">
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <div class="product-thumbnil-active  owl-carousel">
+                                    @foreach (App\Models\ProductGallery::where('product_id', $product_details->id)->get() as $gallery)
+                                        <div class="item">
+                                            <img src="{{ asset('uploads/product/gallery') }}/{{ $gallery->gallery }}"
+                                                alt="">
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
-                            <div class="product-thumbnil-active  owl-carousel">
-                                @foreach (App\Models\ProductGallery::where('product_id', $product_details->id)->get() as $gallery)
-                                    <div class="item">
-                                        <img src="{{ asset('uploads/product/gallery') }}/{{ $gallery->gallery }}"
-                                            alt="">
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="product-single-content">
+                                <h2>{{ $product_details->product_name }}</h2>
+                                <div class="price">
+                                    <span class="present-price">&#2547;{{ $product_details->after_product_discount }}</span>
+                                    @if ($product_details->product_discount)
+                                        <del class="old-price">&#2547;{{ $product_details->product_price }}</del>
+                                    @endif
+                                </div>
+                                <div class="rating-product">
+                                    <i class="fi flaticon-star"></i>
+                                    <i class="fi flaticon-star"></i>
+                                    <i class="fi flaticon-star"></i>
+                                    <i class="fi flaticon-star"></i>
+                                    <i class="fi flaticon-star"></i>
+                                    <span>120</span>
+                                </div>
+                                <p>Aliquam proin at turpis sollicitudin faucibus.
+                                    Non nunc molestie interdum nec sit duis vitae vestibulum id.
+                                    Ipsum non donec egestas quis. A habitant tellus nibh blandit.
+                                    Faucibus dictumst nibh et aliquet in auctor. Amet ultrices urna ullamcorper
+                                    sagittis.
+                                    Hendrerit orci ac fusce pulvinar. Diam tincidunt integer eget morbi diam scelerisque
+                                    mattis.
+                                </p>
+                                <div class="product-filter-item color">
+                                    <div class="color-name">
+                                        <span>Color :</span>
+                                        <ul>
+                                            @foreach ($avilable_colors as $avilable_color)
+                                                @if ($avilable_color->rel_to_color->color_name == 'NA')
+                                                    <li class=""><input class="color_id"
+                                                            id="color{{ $avilable_color->color_id }}" type="radio"
+                                                            name="color_id" value="{{ $avilable_color->color_id }}">
+                                                        <label
+                                                            style="background-color: transparent; font-size:13px; border:2px solid #000; text-align:center; line-height:26px;"
+                                                            for="color{{ $avilable_color->color_id }}">{{ $avilable_color->rel_to_color->color_name }}</label>
+                                                    </li>
+                                                @else
+                                                    <li class=""><input class="color_id"
+                                                            id="color{{ $avilable_color->color_id }}" type="radio"
+                                                            name="color_id" value="{{ $avilable_color->color_id }}">
+                                                        <label
+                                                            style="background-color: {{ $avilable_color->rel_to_color->color_name }}"
+                                                            for="color{{ $avilable_color->color_id }}"></label>
+                                                    </li>
+                                                @endif
+                                            @endforeach
+                                        </ul>
                                     </div>
-                                @endforeach
+                                </div>
+                                <div class="product-filter-item color filter-size">
+                                    <div class="color-name">
+                                        <span>Sizes:</span>
+                                        <ul class="size_avl">
+                                            @foreach ($avilable_sizes as $avilable_size)
+                                                <li class=""><input class="size_id"
+                                                        id="size{{ $avilable_size->size_id }}" type="radio"
+                                                        name="size_id" value="{{ $avilable_size->size_id }}">
+                                                    <label title="{{ $avilable_size->rel_to_size->size_name }}"
+                                                        for="size{{ $avilable_size->size_id }}">
+                                                        @if (Str::length($avilable_size->rel_to_size->size_name) > 3)
+                                                            {{ Str::substr($avilable_size->rel_to_size->size_name, 0, 3) . '..' }}
+                                                        @else
+                                                            {{ $avilable_size->rel_to_size->size_name }}
+                                                        @endif
+                                                    </label>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="pro-single-btn">
+                                    <div class="quantity cart-plus-minus">
+                                        <input name="quantity" class="text-value" type="text" value="1">
+                                    </div>
+                                    @auth('customer')
+                                        <button type="submit" class="theme-btn-s2">Add to cart</button>
+                                    @else
+                                        <a href="{{ route('customer.login') }}" class="theme-btn-s2">Add to cart</a>
+                                    @endauth
+                                    <a href="#" class="wl-btn"><i class="fi flaticon-heart"></i></a>
+                                </div>
+                                <input type="hidden" name="product_id" value="{{ $product_details->id }}">
+                                <ul class="important-text">
+                                    <li><span>SKU:</span>FTE569P</li>
+                                    <li><span>Categories:</span>Best Seller, sale</li>
+                                    <li><span>Tags:</span>Fashion, Coat, Pink</li>
+                                    <li class="stock"></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-7">
-                        <div class="product-single-content">
-                            <h2>{{ $product_details->product_name }}</h2>
-                            <div class="price">
-                                <span class="present-price">&#2547;{{ $product_details->after_product_discount }}</span>
-                                @if ($product_details->product_discount)
-                                    <del class="old-price">&#2547;{{ $product_details->product_price }}</del>
-                                @endif
-                            </div>
-                            <div class="rating-product">
-                                <i class="fi flaticon-star"></i>
-                                <i class="fi flaticon-star"></i>
-                                <i class="fi flaticon-star"></i>
-                                <i class="fi flaticon-star"></i>
-                                <i class="fi flaticon-star"></i>
-                                <span>120</span>
-                            </div>
-                            <p>Aliquam proin at turpis sollicitudin faucibus.
-                                Non nunc molestie interdum nec sit duis vitae vestibulum id.
-                                Ipsum non donec egestas quis. A habitant tellus nibh blandit.
-                                Faucibus dictumst nibh et aliquet in auctor. Amet ultrices urna ullamcorper
-                                sagittis.
-                                Hendrerit orci ac fusce pulvinar. Diam tincidunt integer eget morbi diam scelerisque
-                                mattis.
-                            </p>
-                            <div class="product-filter-item color">
-                                <div class="color-name">
-                                    <span>Color :</span>
-                                    <ul>
-                                        @foreach ($avilable_colors as $avilable_color)
-                                            @if ($avilable_color->rel_to_color->color_name == 'NA')
-                                                <li class=""><input id="color{{ $avilable_color->color_id }}"
-                                                        type="radio" name="color_id"
-                                                        value="{{ $avilable_color->color_id }}">
-                                                    <label
-                                                        style="background-color: transparent; font-size:13px; border:2px solid #000; text-align:center; line-height:26px;"
-                                                        for="color{{ $avilable_color->color_id }}">{{ $avilable_color->rel_to_color->color_name }}</label>
-                                                </li>
-                                            @else
-                                                <li class=""><input id="color{{ $avilable_color->color_id }}"
-                                                        type="radio" name="color_id"
-                                                        value="{{ $avilable_color->color_id }}">
-                                                    <label
-                                                        style="background-color: {{ $avilable_color->rel_to_color->color_name }}"
-                                                        for="color{{ $avilable_color->color_id }}"></label>
-                                                </li>
-                                            @endif
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-filter-item color filter-size">
-                                <div class="color-name">
-                                    <span>Sizes:</span>
-                                    <ul>
-                                        @foreach ($avilable_sizes as $avilable_size)
-                                            <li class=""><input id="size{{ $avilable_size->size_id }}" type="radio"
-                                                    name="size_id" value="{{ $avilable_size->size_id }}">
-                                                <label title="{{ $avilable_size->rel_to_size->size_name }}" for="size{{ $avilable_size->size_id }}">
-                                                    @if (Str::length($avilable_size->rel_to_size->size_name) > 3)
-                                                        {{ Str::substr($avilable_size->rel_to_size->size_name, 0, 3) . '..' }}
-                                                    @else
-                                                        {{ $avilable_size->rel_to_size->size_name }}
-                                                    @endif
-                                                </label>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="pro-single-btn">
-                                <div class="quantity cart-plus-minus">
-                                    <input class="text-value" type="text" value="1">
-                                </div>
-                                <a href="#" class="theme-btn-s2">Add to cart</a>
-                                <a href="#" class="wl-btn"><i class="fi flaticon-heart"></i></a>
-                            </div>
-                            <ul class="important-text">
-                                <li><span>SKU:</span>FTE569P</li>
-                                <li><span>Categories:</span>Best Seller, sale</li>
-                                <li><span>Tags:</span>Fashion, Coat, Pink</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+                </form>
             </div>
             <div class="product-tab-area">
                 <ul class="nav nav-mb-3 main-tab" id="tab" role="tablist">
@@ -142,8 +153,9 @@
                             (3)</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="Information-tab" data-bs-toggle="pill" data-bs-target="#Information"
-                            type="button" role="tab" aria-controls="Information" aria-selected="false">Additional
+                        <button class="nav-link" id="Information-tab" data-bs-toggle="pill"
+                            data-bs-target="#Information" type="button" role="tab" aria-controls="Information"
+                            aria-selected="false">Additional
                             info</button>
                     </li>
                 </ul>
@@ -367,4 +379,49 @@
         </div>
     </div>
     <!-- product-single-section  end-->
+@endsection
+@section('footer_script')
+    <script>
+        $('.color_id').click(function() {
+            var color_id = $(this).val();
+            var product_id = '{{ $product_details->id }}';
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: 'POST',
+                url: '/getSize',
+                data: {
+                    'color_id': color_id,
+                    'product_id': product_id,
+                },
+                success: function(data) {
+                    $('.size_avl').html(data);
+                    $('.size_id').click(function() {
+                        var size_id = $(this).val();
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                    'content')
+                            }
+                        });
+                        $.ajax({
+                            type: 'POST',
+                            url: '/getQuantity',
+                            data: {
+                                'color_id': color_id,
+                                'product_id': product_id,
+                                'size_id': size_id,
+                            },
+                            success: function(data) {
+                                $('.stock').html(data);
+                            }
+                        });
+                    });
+                }
+            });
+        })
+    </script>
 @endsection
