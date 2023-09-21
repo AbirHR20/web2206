@@ -3,6 +3,7 @@
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\CustomerAuthController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\FrontendController;
@@ -110,3 +111,13 @@ Route::post('/customer/profile/update',[CustomerController::class,'customer_prof
 
 //cart
 Route::post('/cart/store',[CartController::class,'cart_store'])->name('cart.store');
+Route::get('/cart/remove/{id}',[CartController::class,'cart_remove'])->name('cart.remove');
+Route::get('/cart',[CartController::class,'cart'])->name('cart');
+Route::post('/cart/update',[CartController::class,'cart_update'])->name('cart.update');
+
+
+//coupon
+Route::get('/coupon',[CouponController::class,'coupon'])->name('coupon');
+Route::post('/coupon/store',[CouponController::class,'coupon_store'])->name('coupon.store');
+Route::post('/couponChangeStatus',[ProductController::class,'couponChangeStatus'])->name('couponChangeStatus');
+Route::get('/coupon/delete/{id}',[ProductController::class,'coupon_delete'])->name('coupon.delete');

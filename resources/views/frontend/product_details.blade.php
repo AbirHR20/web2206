@@ -94,6 +94,9 @@
                                                 @endif
                                             @endforeach
                                         </ul>
+                                        @error('color_id')
+                                            <strong class="text-danger">Please select your color</strong>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="product-filter-item color filter-size">
@@ -115,6 +118,9 @@
                                                 </li>
                                             @endforeach
                                         </ul>
+                                        @error('size_id')
+                                            <strong class="text-danger">Please select your size</strong>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="pro-single-btn">
@@ -122,7 +128,7 @@
                                         <input name="quantity" class="text-value" type="text" value="1">
                                     </div>
                                     @auth('customer')
-                                        <button type="submit" class="theme-btn-s2">Add to cart</button>
+                                        <button type="submit" class="cart-btn theme-btn-s2">Add to cart</button>
                                     @else
                                         <a href="{{ route('customer.login') }}" class="theme-btn-s2">Add to cart</a>
                                     @endauth
@@ -417,6 +423,12 @@
                             },
                             success: function(data) {
                                 $('.stock').html(data);
+                                var q = $('.abc').val();
+                                if (q == 0) {
+                                    $('.cart-btn').attr('disabled', '');
+                                } else{
+                                    $('.cart-btn').removeAttr('disabled', '');
+                                }
                             }
                         });
                     });
@@ -424,4 +436,15 @@
             });
         })
     </script>
+    @if (session('cart_added'))
+        <script>
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: '{{ session('cart_added') }}',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        </script>
+    @endif
 @endsection

@@ -454,6 +454,13 @@
                             <li><a href="{{ route('variation') }}">Product variation</a></li>
                         </ul>
                     </li>
+                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                            <i class="flaticon-381-notepad"></i>
+                            <span class="nav-text">Coupon</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="{{ route('coupon') }}">Add New Coupon</a></li>
+                    </li>
                 </ul>
             </div>
         </div>

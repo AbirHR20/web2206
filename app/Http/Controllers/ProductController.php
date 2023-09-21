@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductRequest;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Coupon;
 use App\Models\Inventory;
 use App\Models\Product;
 use App\Models\ProductGallery;
@@ -109,5 +110,14 @@ class ProductController extends Controller
         Product::find($request->product_id)->update([
             'status'=>$request->status,
         ]);
+    }
+    function couponChangeStatus(Request $request){
+        Coupon::find($request->coupon_id)->update([
+            'status'=>$request->status,
+        ]);
+    }
+    function coupon_delete($id) {
+        Coupon::find($id)->delete();
+        return back();
     }
 }

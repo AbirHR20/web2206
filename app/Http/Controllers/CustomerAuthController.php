@@ -38,7 +38,12 @@ class CustomerAuthController extends Controller
             'password' => bcrypt($request->password),
             'created_at' => Carbon::now(),
         ]);
-        return back()->with('success', 'Customer register successfully!');
+        if (Auth::guard('customer')->attempt([
+            'email' => $request->email,
+            'password' => $request->password,
+        ])) {
+            return redirect()->route('index');
+        }
     }
     function customer_login_confirm(Request $request)
     {
