@@ -125,23 +125,44 @@
                     <div class="col-lg-4 col-12">
                         <div class="cart-total-wrap">
                             <h3>Cart Totals</h3>
-                            <div class="apply-area my-5">
-                                <input type="text" class="form-control" placeholder="Enter your coupon">
-                                <button class="theme-btn-s2" type="submit">Apply</button>
-                            </div>
+                            @if ($msg)
+                                <div class="alert alert-danger">{{ $msg }}</div>
+                            @endif
+                            <form action="{{ route('cart') }}" method="get">
+                                <div class="apply-area my-5">
+                                    <input type="text" class="form-control" name="coupon" placeholder="Enter your coupon" value="{{ @$_GET['coupon'] }}">
+                                    <button class="theme-btn-s2" type="submit" >Apply</button>
+                                </div>
+                            </form>
+                            @php
+                                if ($type == 1) {
+                                    $discount_final = $sub*$discount/100;
+                                    $total = round($sub - $discount_final);
+                                }else {
+                                    $discount_final = $discount;
+                                    $total = round($sub -$discount_final);
+                                }
+                            @endphp
                             <div class="sub-total">
                                 <h4>Subtotal</h4>
                                 <span>&#2547;{{ $sub }}</span>
                             </div>
                             <div class="sub-total my-3">
                                 <h4>Discount</h4>
-                                <span>00.00</span>
+                                <span>&#2547;{{ round($discount_final) }}</span>
                             </div>
                             <div class="total mb-3">
                                 <h4>Total</h4>
-                                <span>$300.00</span>
+                                <span>&#2547;{{ $total }}</span>
                             </div>
-                            <a class="theme-btn-s2" href="checkout.html">Proceed To CheckOut</a>
+                            @php
+                                session([
+                                    'discount'=>$discount_final,
+                                    'total'=>$total,
+                                    'sub_total'=>$sub,
+                                ])
+                            @endphp
+                            <a class="theme-btn-s2" href="{{ route('checkout') }}">Proceed To CheckOut</a>
                         </div>
                     </div>
                 </div>

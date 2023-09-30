@@ -9,6 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" type="image/png" href="{{ asset('front') }}/images/favicon.png">
     <title>Themart - eCommerce HTML5 Template</title>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="{{ asset('front') }}/css/themify-icons.css" rel="stylesheet">
     <link href="{{ asset('front') }}/css/font-awesome.min.css" rel="stylesheet">
     <link href="{{ asset('front') }}/css/flaticon_ecommerce.css" rel="stylesheet">
@@ -194,7 +195,8 @@
                                     <li>
                                         <div class="mini-cart">
                                             <button class="cart-toggle-btn"> <i class="fi flaticon-add-to-cart"></i>
-                                                <span class="cart-count">{{ App\Models\Cart::where('customer_id', Auth::guard('customer')->id())->count() }}</span></button>
+                                                <span
+                                                    class="cart-count">{{ App\Models\Cart::where('customer_id', Auth::guard('customer')->id())->count() }}</span></button>
                                             <div class="mini-cart-content">
                                                 <button class="mini-cart-close"><i class="ti-close"></i></button>
                                                 @php
@@ -227,7 +229,7 @@
                                                             </div>
                                                         </div>
                                                         @php
-                                                            $sub += $cart->rel_to_product->after_product_discount*$cart->quantity;
+                                                            $sub += $cart->rel_to_product->after_product_discount * $cart->quantity;
                                                         @endphp
                                                     @endforeach
 
@@ -236,7 +238,8 @@
                                                     <span class="mini-checkout-price">Subtotal:
                                                         <span>&#2547;{{ $sub }}</span></span>
                                                     <div class="mini-btn">
-                                                        <a href="{{ route('cart') }}" class="view-cart-btn">View Cart</a>
+                                                        <a href="{{ route('cart') }}" class="view-cart-btn">View
+                                                            Cart</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -482,6 +485,7 @@
     <!-- Custom script for this template -->
     <script src="{{ asset('front') }}/js/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     @yield('footer_script')
 </body>
 

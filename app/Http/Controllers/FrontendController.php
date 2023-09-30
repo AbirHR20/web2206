@@ -62,7 +62,6 @@ class FrontendController extends Controller
         echo $str;
     }
     function getQuantity(Request $request) {
-        $str = '';
         $quantity = Inventory::where('product_id', $request->product_id)->where('color_id', $request->color_id)->where('size_id', $request->size_id)->first()->quantity;
         if ($quantity == 0) {
             $quantity = '<button class="abc btn btn-danger" value="'.$quantity.'">Out of stock</button>';

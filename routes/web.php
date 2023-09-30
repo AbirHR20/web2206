@@ -3,6 +3,7 @@
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\CustomerAuthController;
 use App\Http\Controllers\CustomerController;
@@ -121,3 +122,8 @@ Route::get('/coupon',[CouponController::class,'coupon'])->name('coupon');
 Route::post('/coupon/store',[CouponController::class,'coupon_store'])->name('coupon.store');
 Route::post('/couponChangeStatus',[ProductController::class,'couponChangeStatus'])->name('couponChangeStatus');
 Route::get('/coupon/delete/{id}',[ProductController::class,'coupon_delete'])->name('coupon.delete');
+
+//checkout
+Route::get('/checkout',[CheckoutController::class,'checkout'])->name('checkout');
+Route::post('/getCity',[CheckoutController::class,'getCity']);
+Route::post('/order/store',[CheckoutController::class,'order_store'])->name('order.store');

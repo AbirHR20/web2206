@@ -12,6 +12,7 @@
                         <th>Coupon</th>
                         <th>Type</th>
                         <th>Amount</th>
+                        <th>Limit</th>
                         <th>Validity</th>
                         <th>Status</th>
                         <th>Action</th>
@@ -22,6 +23,7 @@
                             <td>{{ $coupon->coupon }}</td>
                             <td>{{ $coupon->type == 1 ? 'percentage' : 'solid' }}</td>
                             <td>{{ $coupon->amount }} {{ $coupon->type == 1 ? '%' : 'tk' }}</td>
+                            <td>{{ $coupon->limit }}</td>
                             <td>
                                 @if (Carbon\Carbon::now() > $coupon->validity)
                                     <span class="badge bg-warning text-light">Expired</span>
