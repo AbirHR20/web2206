@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Inventory;
+use App\Models\OrderProduct;
 use App\Models\Product;
 use App\Models\Subcategory;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FrontendController extends Controller
 {
@@ -22,7 +25,7 @@ class FrontendController extends Controller
     function category_products($id)
     {
         $categories = Category::find($id);
-        $product_categories = Product::where('category_id', $id)->get();
+        $product_categories = Product::where('category_id', $id)->where('status', 1)->get();
         return view('frontend.category_products', [
             'product_categories' => $product_categories,
             'categories' => $categories,
@@ -31,7 +34,7 @@ class FrontendController extends Controller
     function subcategory_products($id)
     {
         $subcategories = Subcategory::find($id);
-        $product_subcategories = Product::where('subcategory_id', $id)->get();
+        $product_subcategories = Product::where('subcategory_id', $id)->where('status', 1)->get();
         return view('frontend.subcategory_products', [
             'product_subcategories' => $product_subcategories,
             'subcategories' => $subcategories,
@@ -40,6 +43,8 @@ class FrontendController extends Controller
     function products_details($slug)
     {
         $product_id = Product::where('slug', $slug)->first()->id;
+        $reviews = OrderProduct::where('product_id',$product_id)->whereNotNull('review')->get();
+        $total_stars = OrderProduct::where('product_id',$product_id)->whereNotNull('review')->sum('star');
         $product_details = Product::find($product_id);
         $avilable_colors = Inventory::where('product_id', $product_id)->groupBy('color_id')->selectRaw('count(*) as total,color_id')->get();
         $avilable_sizes = Inventory::where('product_id', $product_id)->groupBy('size_id')->selectRaw('count(*) as total,size_id')->get();
@@ -47,6 +52,8 @@ class FrontendController extends Controller
             'product_details' => $product_details,
             'avilable_colors' => $avilable_colors,
             'avilable_sizes' => $avilable_sizes,
+            'reviews'=> $reviews,
+            'total_stars'=>$total_stars,
         ]);
     }
     function getSize(Request $request)
@@ -69,5 +76,13 @@ class FrontendController extends Controller
             $quantity = '<button class="btn btn-success">'.$quantity.' in stock</button>';
         }
         echo $quantity; 
+    }
+    function review_store(Request $request) {
+        OrderProduct::where('customer_id',Auth::guard('customer')->id())->where('product_id',$request->product_id)->first()->update([
+            'review' => $request->review,
+            'star' => $request->stars,
+            'updated_at' => Carbon::now(),
+        ]);
+        return back();
     }
 }

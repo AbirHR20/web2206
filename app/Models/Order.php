@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
+    protected $guarded = ['id'];
+    function rel_to_customer() {
+        return $this->belongsTo(customer::class,'customer_id');
+    }
 }

@@ -456,10 +456,27 @@
                     </li>
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
                             <i class="flaticon-381-notepad"></i>
+                            <span class="nav-text">Orders</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="{{ route('orders') }}">Order list</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                            <i class="flaticon-381-notepad"></i>
                             <span class="nav-text">Coupon</span>
                         </a>
                         <ul aria-expanded="false">
                             <li><a href="{{ route('coupon') }}">Add New Coupon</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                            <i class="flaticon-381-notepad"></i>
+                            <span class="nav-text">Subscriber</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="{{ route('subscriber') }}">Subscriber List</a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>
@@ -486,12 +503,6 @@
         <!--**********************************
             Footer start
         ***********************************-->
-        <div class="footer">
-            <div class="copyright">
-                <p>Copyright © Designed &amp; Developed by <a href="http://dexignzone.com/"
-                        target="_blank">DexignZone</a> 2020</p>
-            </div>
-        </div>
         <!--**********************************
             Footer end
         ***********************************-->

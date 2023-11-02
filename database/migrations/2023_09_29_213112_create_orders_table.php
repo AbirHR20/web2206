@@ -20,6 +20,8 @@ return new class extends Migration
             $table->integer('payment_method');
             $table->integer('sub_total');
             $table->integer('total');
+            $table->integer('status')->default(0);
+            $table->integer('order_cancel')->default(0);
             $table->timestamps();
         });
     }

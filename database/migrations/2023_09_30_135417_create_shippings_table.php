@@ -13,17 +13,17 @@ return new class extends Migration
     {
         Schema::create('shippings', function (Blueprint $table) {
             $table->id();
-            $table->string('order_id')->nullable();
-            $table->integer('customer_id')->nullable();
-            $table->string('ship_fname')->nullable();
-            $table->string('ship_lname')->nullable();
-            $table->integer('ship_country_id')->nullable();
-            $table->integer('ship_city_id')->nullable();
-            $table->integer('ship_zip')->nullable();
-            $table->string('ship_company')->nullable();
-            $table->string('ship_email')->nullable();
-            $table->string('ship_phone')->nullable();
-            $table->string('ship_address')->nullable();
+            $table->string('order_id');
+            $table->integer('customer_id');
+            $table->string('ship_fname');
+            $table->string('ship_lname');
+            $table->integer('ship_country_id');
+            $table->integer('ship_city_id');
+            $table->integer('ship_zip');
+            $table->string('ship_company');
+            $table->string('ship_email');
+            $table->string('ship_phone');
+            $table->string('ship_address');
             $table->timestamps();
         });
     }

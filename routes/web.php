@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\StripePaymentController;
+use App\Http\Controllers\SslCommerzPaymentController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
@@ -10,10 +12,14 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubcategoryController;
+use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\UserController;
+use App\Models\Subscriber;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -109,6 +115,8 @@ Route::post('/customer/login/confirm',[CustomerAuthController::class,'customer_l
 Route::get('/customer/profile',[CustomerController::class,'customer_profile'])->name('customer.profile')->middleware('customer');
 Route::get('/customer/logout',[CustomerController::class,'customer_logout'])->name('customer.logout');
 Route::post('/customer/profile/update',[CustomerController::class,'customer_profile_update'])->name('customer.profile.update');
+Route::get('/customer/order',[CustomerController::class,'customer_order'])->name('customer.order');
+Route::get('/cancel/order/{id}',[CustomerController::class,'cancel_order'])->name('cancel.order');
 
 //cart
 Route::post('/cart/store',[CartController::class,'cart_store'])->name('cart.store');
@@ -127,3 +135,44 @@ Route::get('/coupon/delete/{id}',[ProductController::class,'coupon_delete'])->na
 Route::get('/checkout',[CheckoutController::class,'checkout'])->name('checkout');
 Route::post('/getCity',[CheckoutController::class,'getCity']);
 Route::post('/order/store',[CheckoutController::class,'order_store'])->name('order.store');
+Route::get('/order/success',[CheckoutController::class,'order_success'])->name('order.success');
+Route::get('/order/invoice/download/{id}',[CustomerController::class,'order_invoice_download'])->name('order.invoice.download');
+
+
+//orders
+Route::get('/orders',[OrderController::class,'orders'])->name('orders');
+Route::post('/order/status/update',[OrderController::class,'order_status_update'])->name('order.status.update');
+Route::get('/order/cancel/request',[OrderController::class,'order_cancel_request'])->name('order.cancel.request');
+
+// SSLCOMMERZ Start
+
+Route::get('/pay', [SslCommerzPaymentController::class, 'index'])->name('pay');
+Route::post('/pay-via-ajax', [SslCommerzPaymentController::class, 'payViaAjax']);
+
+Route::post('/success', [SslCommerzPaymentController::class, 'success']);
+Route::post('/fail', [SslCommerzPaymentController::class, 'fail']);
+Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel']);
+
+Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
+//SSLCOMMERZ END
+
+//stripe
+Route::controller(StripePaymentController::class)->group(function(){
+    Route::get('stripe', 'stripe')->name('stripe');
+    Route::post('stripe', 'stripePost')->name('stripe.post');
+});
+
+//review
+Route::post('/review/store', [FrontendController::class, 'review_store'])->name('review.store');
+
+//subscribe
+Route::post('/subscriber/store', [SubscriberController::class, 'subscriber_store'])->name('subscriber.store');
+Route::get('/subscriber', [SubscriberController::class, 'subscriber'])->name('subscriber');
+Route::get('/send/newsletter/{id}', [SubscriberController::class, 'send_newsletter'])->name('send.newsletter');
+
+//password reset
+Route::get('/password/reset', [PasswordResetController::class, 'password_reset'])->name('password.reset');
+Route::post('/password/reset/request/sent', [PasswordResetController::class, 'passwordreset_request_sent'])->name('passwordreset.request.sent');
+Route::get('/password/reset/form/{token}', [PasswordResetController::class, 'passwordreset_form'])->name('passwordreset.form');
+Route::post('/password/reset/confirm/{token}', [PasswordResetController::class, 'password_reset_confirm'])->name('password.reset.confirm');
+Route::get('/customer/email/verify/{token}', [CustomerAuthController::class, 'customer_email_verify'])->name('customer.email.verify');

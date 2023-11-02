@@ -80,10 +80,10 @@
                             <h2>
                                 @if (Str::length($category->category_name) > 10)
                                     <a title="{{ $category->category_name }}"
-                                        href="{{ route('category.products',$category->id) }}">{{ Str::substr($category->category_name, 0, 10) . '...' }}</a>
+                                        href="{{ route('category.products', $category->id) }}">{{ Str::substr($category->category_name, 0, 10) . '...' }}</a>
                                 @else
                                     <a title="{{ $category->category_name }}"
-                                        href="{{ route('category.products',$category->id) }}">{{ $category->category_name }}</a>
+                                        href="{{ route('category.products', $category->id) }}">{{ $category->category_name }}</a>
                                 @endif
                             </h2>
                         </div>
@@ -163,12 +163,30 @@
                                     <h2>
                                         @if (Str::length($product->product_name) > 20)
                                             <a title="{{ $product->product_name }}"
-                                                href="{{ route('products.details',$product->slug) }}">{{ Str::substr($product->product_name, 0, 20) . '...' }}</a>
+                                                href="{{ route('products.details', $product->slug) }}">{{ Str::substr($product->product_name, 0, 20) . '...' }}</a>
                                         @else
                                             <a title="{{ $product->product_name }}"
-                                                href="{{ route('products.details',$product->slug) }}">{{ $product->product_name }}</a>
+                                                href="{{ route('products.details', $product->slug) }}">{{ $product->product_name }}</a>
                                         @endif
                                     </h2>
+                                    @php
+                                        $total_star = App\Models\OrderProduct::where('product_id', $product->id)
+                                            ->whereNotNull('review')
+                                            ->sum('star');
+                                        $total_review = App\Models\OrderProduct::where('product_id', $product->id)
+                                            ->whereNotNull('review')
+                                            ->count();
+                                        $avg = 0;
+                                        if ($total_review != 0) {
+                                            $avg = round($total_star / $total_review);
+                                        }
+                                    @endphp
+                                    <div class="rating-product">
+                                        @for ($i = 1; $i <= $avg; $i++)
+                                            <i class="fi flaticon-star"></i>
+                                        @endfor
+                                        <span>{{ $total_review == 0?'':$total_review }}</span>
+                                    </div>
                                     <div class="price">
                                         <span
                                             class="present-price">&#2547;{{ number_format($product->after_product_discount) }}</span>
@@ -470,7 +488,8 @@
                             <div class="product-card">
                                 <div class="card-image">
                                     <div class="image">
-                                        <img height="100"src="{{ asset('uploads/product/preview') }}/{{ $product->preview }}" alt="">
+                                        <img height="100"src="{{ asset('uploads/product/preview') }}/{{ $product->preview }}"
+                                            alt="">
                                     </div>
                                 </div>
                                 <div class="content">
@@ -574,7 +593,7 @@
     <!-- end of themart-highlight-product-section -->
 
     <!-- start of themart-cta-section -->
-    <section class="themart-cta-section section-padding">
+    <section class="themart-cta-section section-padding" id="subs">
         <div class="container">
             <div class="cta-wrap">
                 <div class="row">
@@ -582,14 +601,18 @@
                         <div class="cta-content">
                             <h2>Subscribe Our Newsletter & <br>
                                 Get 30% Discounts For Next Order</h2>
-                            <form>
+                            <form action="{{ route('subscriber.store') }}" method="POST">
+                                @csrf
                                 <div class="input-1">
-                                    <input type="email" class="form-control" placeholder="Your Email..."
+                                    <input name="email" type="email" class="form-control" placeholder="Your Email..."
                                         required="">
                                     <div class="submit clearfix">
                                         <button class="theme-btn-s2" type="submit">Subscribe</button>
                                     </div>
                                 </div>
+                                @if (session('subs'))
+                                    <div class="alert alert-success">{{ session('subs') }}</div>
+                                @endif
                             </form>
                         </div>
 

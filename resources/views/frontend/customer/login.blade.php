@@ -94,6 +94,9 @@
                                             @if (session('exists'))
                                             <strong class="text-danger">{{ session('exists') }}</strong>
                                             @endif
+                                            @if (session('not_verified'))
+                                            <strong class="text-danger">{{ session('not_verified') }}</strong>
+                                            @endif
                                             @error('password')
                                                 <strong class="text-danger">{{ $message }}</strong>
                                             @enderror
@@ -103,7 +106,7 @@
                                         <div class="check-box-wrap">
 
                                             <div class="forget-btn">
-                                                <a href="forgot.html">Forgot Password?</a>
+                                                <a href="{{ route('password.reset') }}">Forgot Password?</a>
                                             </div>
                                         </div>
                                     </div>

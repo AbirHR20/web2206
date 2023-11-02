@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\customer;
+use App\Models\Order;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -92,5 +94,26 @@ class CustomerController extends Controller
                 return back()->with('success', 'profile updated!');
             }
         }
+    }
+    function customer_order()
+    {
+        $myorders = Order::where('customer_id', Auth::guard('customer')->id())->latest()->paginate(5);
+        return view('frontend.customer.order', [
+            'myorders' => $myorders,
+        ]);
+    }
+    function order_invoice_download($id)
+    {
+        $order_info = Order::find($id);
+        $pdf = FacadePdf::loadView('frontend.invoice.invoice',[
+            'order_id'=>$order_info->order_id,
+        ]);
+        return $pdf->download('itsolutionstuff.pdf');
+    }
+    function cancel_order($id)  {
+        Order::find($id)->update([
+            'order_cancel'=> 1,
+        ]);
+        return back();
     }
 }

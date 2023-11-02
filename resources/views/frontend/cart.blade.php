@@ -26,7 +26,7 @@
                 <div class="col-12">
                     <div class="single-page-title">
                         <h2>Your Cart</h2>
-                        <p>There are 4 products in this list</p>
+                        <p>There are {{ $carts->count() }} products in this list</p>
                     </div>
                 </div>
             </div>
