@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 @section('content')
-    <div class="col-lg-12">
+@can('product_access')
+<div class="col-lg-12">
         <div class="card">
             <div class="card-header">
                 <h3>Product List</h3>
@@ -53,6 +54,9 @@
             </div>
         </div>
     </div>
+    @else
+    <h3 class="text-danger">You don't have access to view this page.</h3>    
+@endcan   
 @endsection
 @section('footer_script')
     <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>

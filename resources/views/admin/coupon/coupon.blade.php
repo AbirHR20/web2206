@@ -1,5 +1,6 @@
 @extends('layouts.admin');
 @section('content')
+@can('coupon_access')
     <div class="col-lg-8">
         <div class="card">
             <div class="card-header">
@@ -103,6 +104,9 @@
             </div>
         </div>
     </div>
+    @else
+    <h3 class="text-danger">You don't have access to view this page.</h3>    
+@endcan
 @endsection
 @section('footer_script')
     <script>

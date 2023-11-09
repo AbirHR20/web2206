@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 @section('content')
-    <div class="col-lg-8">
+@can('brand_access')
+<div class="col-lg-8">
         @if (session('delete'))
             <div class="alert alert-success">{{ session('delete') }}</div>
         @endif
@@ -38,6 +39,7 @@
             </div>
         </div>
     </div>
+    @can('brand_add')
     <div class="col-lg-4">
         <div class="card">
             <div class="card-header">
@@ -72,5 +74,9 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div>     
+    @endcan
+    @else
+    <h3 class="text-danger">You don't have access to view this page.</h3>      
+@endcan  
 @endsection

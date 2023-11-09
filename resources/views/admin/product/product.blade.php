@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 @section('content')
-    <div class="col-lg-12">
+@can('product_add')
+<div class="col-lg-12">
         @if (session('success'))
             <div class="alert alert-success m-auto">{{ session('success') }}</div>
         @endif
@@ -142,6 +143,9 @@
             </div>
         </div>
     </div>
+    @else
+    <h3 class="text-danger">You don't have access to view this page.</h3>    
+@endcan   
 @endsection
 @section('footer_script')
     <script>

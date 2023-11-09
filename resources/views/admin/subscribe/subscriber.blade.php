@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 @section('content')
-    <div class="col-lg-10 m-auto">
+@can('subscribe_access')
+<div class="col-lg-10 m-auto">
         <div class="card">
             <div class="card-header">
                 <h3>Subscriber List</h3>
@@ -29,4 +30,7 @@
             </div>
         </div>
     </div>
+    @else
+    <h3 class="text-danger">You don't have access to view this page.</h3>    
+@endcan   
 @endsection

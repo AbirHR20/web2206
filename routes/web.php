@@ -16,6 +16,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleManagerController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\UserController;
@@ -172,7 +173,18 @@ Route::get('/send/newsletter/{id}', [SubscriberController::class, 'send_newslett
 
 //password reset
 Route::get('/password/reset', [PasswordResetController::class, 'password_reset'])->name('password.reset');
+
 Route::post('/password/reset/request/sent', [PasswordResetController::class, 'passwordreset_request_sent'])->name('passwordreset.request.sent');
 Route::get('/password/reset/form/{token}', [PasswordResetController::class, 'passwordreset_form'])->name('passwordreset.form');
 Route::post('/password/reset/confirm/{token}', [PasswordResetController::class, 'password_reset_confirm'])->name('password.reset.confirm');
 Route::get('/customer/email/verify/{token}', [CustomerAuthController::class, 'customer_email_verify'])->name('customer.email.verify');
+
+//role manage
+Route::get('/role/manager', [RoleManagerController::class, 'role_manager'])->name('role.manager');
+Route::post('/permission/store', [RoleManagerController::class, 'permission_store'])->name('permission.store');
+Route::post('/role/store', [RoleManagerController::class, 'role_store'])->name('role.store');
+Route::post('/assign/role', [RoleManagerController::class, 'assign_role'])->name('assign.role');
+Route::get('/remove/user/role/{id}', [RoleManagerController::class, 'remove_user_role'])->name('remove.user.role');
+Route::get('/delete/role/{id}', [RoleManagerController::class, 'delete_role'])->name('delete.role');
+Route::get('/edit/role/{id}', [RoleManagerController::class, 'edit_role'])->name('edit.role');
+Route::post('/role/update/{id}', [RoleManagerController::class, 'role_update'])->name('update.role');

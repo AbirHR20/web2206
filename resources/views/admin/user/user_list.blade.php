@@ -1,42 +1,47 @@
 @extends('layouts.admin')
 @section('content')
-    <div class="col-lg-8 m-auto">
-        <div class="card">
-            <div class="card-header">User List</div>
-            <div class="card-body">
-                <table class="table table-bordered">
-                    <tr>
-                        <th>Sl</th>
-                        <th>Photo</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Action</th>
-                    </tr>
-                    @foreach ($users as $user)
+    @can('user_access')
+        <div class="col-lg-8 m-auto">
+            <div class="card">
+                <div class="card-header">User List</div>
+                <div class="card-body">
+                    <table class="table table-bordered">
                         <tr>
-                            <td>{{ $user->id }}</td>
-                            <td>
-                                @if ($user->photo == null)
-                                    <img src="{{ Avatar::create($user->name)->toBase64() }}" width="70px">
-                                @else
-                                    <img src="{{ asset('uploads/user') }}/{{ $user->photo }}" width="70px">
-                                @endif
-                            </td>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->email }}</td>
-                            <td>
-                                <div class="d-flex">
-                                    <button class="btn btn-danger shadow btn-xs sharp del_btn"
-                                        data-link="{{ route('user.remove', $user->id) }}"><i
-                                            class="fa fa-trash"></i></button>
-                                </div>
-                            </td>
+                            <th>Sl</th>
+                            <th>Photo</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Action</th>
                         </tr>
-                    @endforeach
-                </table>
+                        @foreach ($users as $user)
+                            <tr>
+                                <td>{{ $user->id }}</td>
+                                <td>
+                                    @if ($user->photo == null)
+                                        <img src="{{ Avatar::create($user->name)->toBase64() }}" width="70px">
+                                    @else
+                                        <img src="{{ asset('uploads/user') }}/{{ $user->photo }}" width="70px">
+                                    @endif
+                                </td>
+                                <td>{{ $user->name }}</td>
+                                <td>{{ $user->email }}</td>
+                                <td>
+                                    <div class="d-flex">
+                                        <button class="btn btn-danger shadow btn-xs sharp del_btn"
+                                            data-link="{{ route('user.remove', $user->id) }}"><i
+                                                class="fa fa-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
+        @else
+        <h3 class="text-danger">You don't have access to view this page.</h3>
+    @endcan
+
 @endsection
 @section('footer_script')
     <script>
