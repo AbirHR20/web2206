@@ -188,3 +188,6 @@ Route::get('/remove/user/role/{id}', [RoleManagerController::class, 'remove_user
 Route::get('/delete/role/{id}', [RoleManagerController::class, 'delete_role'])->name('delete.role');
 Route::get('/edit/role/{id}', [RoleManagerController::class, 'edit_role'])->name('edit.role');
 Route::post('/role/update/{id}', [RoleManagerController::class, 'role_update'])->name('update.role');
+
+//shop
+Route::get('/shop', [FrontendController::class, 'shop'])->name('shop');

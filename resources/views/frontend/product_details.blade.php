@@ -66,14 +66,7 @@
                                     @endfor
                                     <span>{{ $reviews->count() }}</span>
                                 </div>
-                                <p>Aliquam proin at turpis sollicitudin faucibus.
-                                    Non nunc molestie interdum nec sit duis vitae vestibulum id.
-                                    Ipsum non donec egestas quis. A habitant tellus nibh blandit.
-                                    Faucibus dictumst nibh et aliquet in auctor. Amet ultrices urna ullamcorper
-                                    sagittis.
-                                    Hendrerit orci ac fusce pulvinar. Diam tincidunt integer eget morbi diam scelerisque
-                                    mattis.
-                                </p>
+                                <p>{{ $product_details->short_desp }}</p>
                                 <div class="product-filter-item color">
                                     <div class="color-name">
                                         <span>Color :</span>

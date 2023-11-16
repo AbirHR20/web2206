@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Color;
 use App\Models\Inventory;
 use App\Models\OrderProduct;
 use App\Models\Product;
+use App\Models\Size;
 use App\Models\Subcategory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -84,5 +86,54 @@ class FrontendController extends Controller
             'updated_at' => Carbon::now(),
         ]);
         return back();
+    }
+    function shop(Request $request) {
+        $data = $request->all();
+        $sorting = 'created_at';
+        $type = 'DESC';
+        if (!empty($data['sorting']) && $data['sorting'] != '' && $data['sorting'] !='undefined') {
+            if ($data['sorting'] == 1) {
+                $sorting = 'after_product_discount';
+                $type = 'ASC';
+            }
+            elseif ($data['sorting'] == 2) {
+                $sorting = 'after_product_discount';
+                $type = 'DESC';
+            }
+        }
+        $products = Product::where(function($q) use ($data){
+            $min = 0;
+            $max = Product::max('after_product_discount');
+            if (!empty($data['min']) && $data['min'] != '' && $data['min'] !='undefined') {
+                $min=$data['min'];
+            }
+            if (!empty($data['max']) && $data['max'] != '' && $data['max'] !='undefined') {
+                $max=$data['max'];
+            }
+            if (!empty($data['search_input']) && $data['search_input'] != '' && $data['search_input'] !='undefined') {
+                $q->where(function ($q) use ($data) {
+                    $q->where('product_name','LIKE','%'.$data['search_input'].'%');
+                    $q->orWhere('short_desp','LIKE','%'.$data['search_input'].'%');
+                    $q->orWhere('long_desp','LIKE','%'.$data['search_input'].'%');
+                });
+            }
+            if (!empty($data['category_id'])&&$data['category_id']!=''&&$data['category_id']!='undefined') {
+                $q->where(function ($q) use($data) {
+                    $q->where('category_id',$data['category_id']);
+                });
+            }
+            if (!empty($data['min'])&&$data['min']!=''&&$data['min']!='undefined'||!empty($data['max'])&&$data['max']!=''&&$data['max']!='undefined') {
+                    $q->whereBetween('after_product_discount',[$min,$max]);
+            }
+        })->orderBy($sorting,$type)->get();
+        $categories = Category::all();
+        $colors = Color::all();
+        $sizes = Size::all();
+        return view('frontend.shop',[
+            'products'=>$products,
+            'categories'=>$categories,
+            'colors'=>$colors,
+            'sizes'=>$sizes,
+        ]);
     }
 }
