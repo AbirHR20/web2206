@@ -19,6 +19,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleManagerController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\SubscriberController;
+use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use App\Models\Subscriber;
 use Illuminate\Support\Facades\Route;
@@ -191,3 +192,8 @@ Route::post('/role/update/{id}', [RoleManagerController::class, 'role_update'])-
 
 //shop
 Route::get('/shop', [FrontendController::class, 'shop'])->name('shop');
+
+//tag
+Route::get('/tag', [TagController::class, 'tag'])->name('tag');
+Route::post('/tag/store', [TagController::class, 'tag_store'])->name('tag.store');
+Route::get('/tag/remove/{id}', [TagController::class, 'tag_remove'])->name('tag.remove');

@@ -102,7 +102,7 @@
                         <div class="col-lg-6 col-12">
                             <div class="middle-box">
                                 <div class="category">
-                                    <select name="service" class="form-control">
+                                    <select name="service" class="form-control" id="top-cate">
                                         <option value="">All Category</option>
                                         <option>Select Category</option>
                                         @foreach (App\Models\Category::all() as $category)

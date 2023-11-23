@@ -88,8 +88,8 @@
                                     @foreach ($colors as $color)
                                     <li>
                                         <label class="topcoat-radio-button__label">
-                                            {{ $color->color_name }} <span>(21)</span>
-                                            <input type="radio" name="topcoat2" class="color_id" value="{{ $color->id }}">
+                                            {{ $color->color_name }} <span>({{ App\Models\Inventory::where('color_id',$color->id)->count() }})</span>
+                                            <input type="radio" name="color_id" class="color_id" value="{{ $color->id }}">
                                             <span class="topcoat-radio-button"></span>
                                         </label>
                                     </li>    
@@ -104,8 +104,8 @@
                                     @foreach ($sizes as $size)
                                     <li>
                                         <label class="topcoat-radio-button__label">
-                                            {{ $size->size_name }} <span>(10)</span>
-                                            <input type="radio" name="topcoat3"  value="{{ $size->id }}">
+                                            {{ $size->size_name }} <span>({{ App\Models\Inventory::where('size_id',$size->id)->count() }})</span>
+                                            <input type="radio" name="size_id"  value="{{ $size->id }}">
                                             <span class="topcoat-radio-button"></span>
                                         </label>
                                     </li>    
@@ -117,15 +117,15 @@
                             <div class="shop-filter-item tag-widget">
                                 <h2>Popular Tags</h2>
                                 <ul>
-                                    <li><a href="#">Fashion</a></li>
-                                    <li><a href="#">Shoes</a></li>
-                                    <li><a href="#">Kids</a></li>
-                                    <li><a href="#">Theme</a></li>
-                                    <li><a href="#">Stylish</a></li>
-                                    <li><a href="#">Women</a></li>
-                                    <li><a href="#">Shop</a></li>
-                                    <li><a href="#">Men</a></li>
-                                    <li><a href="#">Blog</a></li>
+                                    @foreach ($tags as $tag)
+                                    <li>
+                                        <label class="topcoat-radio-button__label">
+                                            {{ $tag->tag }}
+                                            <input name="tag_id" type="radio" name="topcoat2" class="tagz_id" value="{{ $tag->id }}">
+                                            <span class="topcoat-radio-button"></span>
+                                        </label>
+                                    </li>    
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -201,13 +201,17 @@
 @section('footer_script')
 <script>
     $('.search-btn').click(function () { 
+        var top_cate = $('#top-cate').val();
         var search_input = $('#search_input').val(); 
         var category_id = $("input[type='radio'][name='category_id']:checked").val();
         var min = $('#min').val();
         var max = $('#max').val();
         var sorting = $('.sorting').val();
-        var link = "{{ route('shop') }}"+"?search_input="+search_input+"&category_id="+category_id+"&min="+min+"&max="+max+"&sorting="+sorting; 
-        window.location.href = link;    
+        var color_id = $("input[type='radio'][name='color_id']:checked").val();
+        var size_id =  $("input[type='radio'][name='size_id']:checked").val();
+        var tag_id =  $("input[type='radio'][name='tag_id']:checked").val();
+        var link = "{{ route('shop') }}"+"?search_input="+search_input+"&category_id="+category_id+"&category2_id="+top_cate+"&min="+min+"&max="+max+"&sorting="+sorting+"&color_id="+color_id+"&size_id="+size_id+"&tag_id="+tag_id;
+        window.location.href = link;   
     });
     $('.search-btn2').click(function () { 
         var search_input2 = $('#search-input2').val(); 
