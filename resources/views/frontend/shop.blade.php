@@ -44,7 +44,7 @@
                                     <li>
                                         <label class="topcoat-radio-button__label">
                                             {{ $category->category_name }} <span>({{ App\Models\Product::where('category_id',$category->id)->count() }})</span>
-                                            <input name="category_id" type="radio" name="topcoat2" class="category_id" value="{{ $category->id }}">
+                                            <input {{ $category->id == @$_GET['category_id']?'checked':'' }} name="category_id" type="radio" name="topcoat2" class="category_id" value="{{ $category->id }}">
                                             <span class="topcoat-radio-button"></span>
                                         </label>
                                     </li>    
@@ -66,15 +66,15 @@
                                             <div class="d-flex">
                                                 <div class="col-lg-6 pe-2">
                                                     <label for="" class="form-label">Min</label>
-                                                    <input id="min" type="text" class="form-control" placeholder="Min amount">
+                                                    <input id="min" value="{{ @$_GET['min'] }}" type="text" class="form-control" placeholder="Min amount">
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <label for="" class="form-label">Max</label>
-                                                    <input id="max" type="text" class="form-control" placeholder="Max amount">
+                                                    <input id="max" value="{{ @$_GET['max'] }}" type="text" class="form-control" placeholder="Max amount">
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 mt-4">
-                                                <button id="price_range" class="form-control bg-light">Submit</button>
+                                                <button type="button" id="price_range" class="form-control bg-light search-btn">Submit</button>
                                             </div>
                                         </form>
                                     </div>
@@ -89,7 +89,7 @@
                                     <li>
                                         <label class="topcoat-radio-button__label">
                                             {{ $color->color_name }} <span>({{ App\Models\Inventory::where('color_id',$color->id)->count() }})</span>
-                                            <input type="radio" name="color_id" class="color_id" value="{{ $color->id }}">
+                                            <input type="radio" name="color_id" class="color_id" value="{{ $color->id }}" {{ $color->id == @$_GET['color_id']?'checked':'' }}>
                                             <span class="topcoat-radio-button"></span>
                                         </label>
                                     </li>    
@@ -105,7 +105,7 @@
                                     <li>
                                         <label class="topcoat-radio-button__label">
                                             {{ $size->size_name }} <span>({{ App\Models\Inventory::where('size_id',$size->id)->count() }})</span>
-                                            <input type="radio" name="size_id"  value="{{ $size->id }}">
+                                            <input type="radio" class="size_id" name="size_id"  value="{{ $size->id }}"{{ $size->id == @$_GET['size_id']?'checked':'' }}>
                                             <span class="topcoat-radio-button"></span>
                                         </label>
                                     </li>    
@@ -121,7 +121,7 @@
                                     <li>
                                         <label class="topcoat-radio-button__label">
                                             {{ $tag->tag }}
-                                            <input name="tag_id" type="radio" name="topcoat2" class="tagz_id" value="{{ $tag->id }}">
+                                            <input name="tag_id" type="radio" name="topcoat2" class="tag_id" value="{{ $tag->id }}" {{ $tag->id == @$_GET['tag_id']?'checked':'' }}>
                                             <span class="topcoat-radio-button"></span>
                                         </label>
                                     </li>    
@@ -197,26 +197,4 @@
         </div>
     </div>
     <!-- product-area-end -->
-@endsection
-@section('footer_script')
-<script>
-    $('.search-btn').click(function () { 
-        var top_cate = $('#top-cate').val();
-        var search_input = $('#search_input').val(); 
-        var category_id = $("input[type='radio'][name='category_id']:checked").val();
-        var min = $('#min').val();
-        var max = $('#max').val();
-        var sorting = $('.sorting').val();
-        var color_id = $("input[type='radio'][name='color_id']:checked").val();
-        var size_id =  $("input[type='radio'][name='size_id']:checked").val();
-        var tag_id =  $("input[type='radio'][name='tag_id']:checked").val();
-        var link = "{{ route('shop') }}"+"?search_input="+search_input+"&category_id="+category_id+"&category2_id="+top_cate+"&min="+min+"&max="+max+"&sorting="+sorting+"&color_id="+color_id+"&size_id="+size_id+"&tag_id="+tag_id;
-        window.location.href = link;   
-    });
-    $('.search-btn2').click(function () { 
-        var search_input2 = $('#search-input2').val(); 
-        var link = "{{ route('shop') }}"+"?search_input="+search_input2; 
-        window.location.href = link;    
-    });
-</script>
 @endsection

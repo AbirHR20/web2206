@@ -494,6 +494,14 @@
                             <li><a href="{{ route('tag') }}">Add tags</a></li>
                         </ul>
                     </li>
+                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                            <i class="flaticon-381-notepad"></i>
+                            <span class="nav-text">FAQ</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="{{ route('faq.index') }}">Add FAQ</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>

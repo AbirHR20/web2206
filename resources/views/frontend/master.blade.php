@@ -113,8 +113,8 @@
                                 </div>
                                 <div class="search-box">
                                     <div class="input-group">
-                                        <input id="search_input" type="search" class="form-control"
-                                            placeholder="What are you looking for?">
+                                        <input id="search_input" value="{{ @$_GET['search_input'] }}" type="search"
+                                            class="form-control" placeholder="What are you looking for?">
                                         <button class="search-btn" type="button"> <i class="fi flaticon-search"></i>
                                         </button>
                                     </div>
@@ -487,6 +487,118 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     @yield('footer_script')
+    <script>
+        $('.search-btn').click(function() {
+            var top_cate = $('#top-cate').val();
+            var search_input = $('#search_input').val();
+            var category_id = $("input[type='radio'][name='category_id']:checked").val();
+            var min = $('#min').val();
+            var max = $('#max').val();
+            var sorting = $('.sorting').val();
+            var color_id = $("input[type='radio'][name='color_id']:checked").val();
+            var size_id = $("input[type='radio'][name='size_id']:checked").val();
+            var tag_id = $("input[type='radio'][name='tag_id']:checked").val();
+            var link = "{{ route('shop') }}" + "?search_input=" + search_input + "&category_id=" + category_id +
+                "&category2_id=" + top_cate + "&min=" + min + "&max=" + max + "&sorting=" + sorting + "&color_id=" +
+                color_id + "&size_id=" + size_id + "&tag_id=" + tag_id;
+            window.location.href = link;
+        });
+        $('#price_range').click(function() {
+            var top_cate = $('#top-cate').val();
+            var search_input = $('#search_input').val();
+            var category_id = $("input[type='radio'][name='category_id']:checked").val();
+            var min = $('#min').val();
+            var max = $('#max').val();
+            var sorting = $('.sorting').val();
+            var color_id = $("input[type='radio'][name='color_id']:checked").val();
+            var size_id = $("input[type='radio'][name='size_id']:checked").val();
+            var tag_id = $("input[type='radio'][name='tag_id']:checked").val();
+            var link = "{{ route('shop') }}" + "?search_input=" + search_input + "&category_id=" + category_id +
+                "&category2_id=" + top_cate + "&min=" + min + "&max=" + max + "&sorting=" + sorting + "&color_id=" +
+                color_id + "&size_id=" + size_id + "&tag_id=" + tag_id;
+            window.location.href = link;
+        });
+        $('.category_id').click(function() {
+            var top_cate = $('#top-cate').val();
+            var search_input = $('#search_input').val();
+            var category_id = $("input[type='radio'][name='category_id']:checked").val();
+            var min = $('#min').val();
+            var max = $('#max').val();
+            var sorting = $('.sorting').val();
+            var color_id = $("input[type='radio'][name='color_id']:checked").val();
+            var size_id = $("input[type='radio'][name='size_id']:checked").val();
+            var tag_id = $("input[type='radio'][name='tag_id']:checked").val();
+            var link = "{{ route('shop') }}" + "?search_input=" + search_input + "&category_id=" + category_id +
+                "&category2_id=" + top_cate + "&min=" + min + "&max=" + max + "&sorting=" + sorting + "&color_id=" +
+                color_id + "&size_id=" + size_id + "&tag_id=" + tag_id;
+            window.location.href = link;
+        });
+        $('.color_id').click(function() {
+            var top_cate = $('#top-cate').val();
+            var search_input = $('#search_input').val();
+            var category_id = $("input[type='radio'][name='category_id']:checked").val();
+            var min = $('#min').val();
+            var max = $('#max').val();
+            var sorting = $('.sorting').val();
+            var color_id = $("input[type='radio'][name='color_id']:checked").val();
+            var size_id = $("input[type='radio'][name='size_id']:checked").val();
+            var tag_id = $("input[type='radio'][name='tag_id']:checked").val();
+            var link = "{{ route('shop') }}" + "?search_input=" + search_input + "&category_id=" + category_id +
+                "&category2_id=" + top_cate + "&min=" + min + "&max=" + max + "&sorting=" + sorting + "&color_id=" +
+                color_id + "&size_id=" + size_id + "&tag_id=" + tag_id;
+            window.location.href = link;
+        });
+        $('.size_id').click(function() {
+            var top_cate = $('#top-cate').val();
+            var search_input = $('#search_input').val();
+            var category_id = $("input[type='radio'][name='category_id']:checked").val();
+            var min = $('#min').val();
+            var max = $('#max').val();
+            var sorting = $('.sorting').val();
+            var color_id = $("input[type='radio'][name='color_id']:checked").val();
+            var size_id = $("input[type='radio'][name='size_id']:checked").val();
+            var tag_id = $("input[type='radio'][name='tag_id']:checked").val();
+            var link = "{{ route('shop') }}" + "?search_input=" + search_input + "&category_id=" + category_id +
+                "&category2_id=" + top_cate + "&min=" + min + "&max=" + max + "&sorting=" + sorting + "&color_id=" +
+                color_id + "&size_id=" + size_id + "&tag_id=" + tag_id;
+            window.location.href = link;
+        });
+        $('.tag_id').click(function() {
+            var top_cate = $('#top-cate').val();
+            var search_input = $('#search_input').val();
+            var category_id = $("input[type='radio'][name='category_id']:checked").val();
+            var min = $('#min').val();
+            var max = $('#max').val();
+            var sorting = $('.sorting').val();
+            var color_id = $("input[type='radio'][name='color_id']:checked").val();
+            var size_id = $("input[type='radio'][name='size_id']:checked").val();
+            var tag_id = $("input[type='radio'][name='tag_id']:checked").val();
+            var link = "{{ route('shop') }}" + "?search_input=" + search_input + "&category_id=" + category_id +
+                "&category2_id=" + top_cate + "&min=" + min + "&max=" + max + "&sorting=" + sorting + "&color_id=" +
+                color_id + "&size_id=" + size_id + "&tag_id=" + tag_id;
+            window.location.href = link;
+        });
+        $('.sorting').change(function() {
+            var top_cate = $('#top-cate').val();
+            var search_input = $('#search_input').val();
+            var category_id = $("input[type='radio'][name='category_id']:checked").val();
+            var min = $('#min').val();
+            var max = $('#max').val();
+            var sorting = $('.sorting').val();
+            var color_id = $("input[type='radio'][name='color_id']:checked").val();
+            var size_id = $("input[type='radio'][name='size_id']:checked").val();
+            var tag_id = $("input[type='radio'][name='tag_id']:checked").val();
+            var link = "{{ route('shop') }}" + "?search_input=" + search_input + "&category_id=" + category_id +
+                "&category2_id=" + top_cate + "&min=" + min + "&max=" + max + "&sorting=" + sorting + "&color_id=" +
+                color_id + "&size_id=" + size_id + "&tag_id=" + tag_id;
+            window.location.href = link;
+        });
+        $('.search-btn2').click(function() {
+            var search_input2 = $('#search-input2').val();
+            var link = "{{ route('shop') }}" + "?search_input=" + search_input2;
+            window.location.href = link;
+        });
+    </script>
 </body>
 
 </html>

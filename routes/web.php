@@ -9,6 +9,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\CustomerAuthController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\FaqController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InventoryController;
@@ -197,3 +198,6 @@ Route::get('/shop', [FrontendController::class, 'shop'])->name('shop');
 Route::get('/tag', [TagController::class, 'tag'])->name('tag');
 Route::post('/tag/store', [TagController::class, 'tag_store'])->name('tag.store');
 Route::get('/tag/remove/{id}', [TagController::class, 'tag_remove'])->name('tag.remove');
+
+//faq
+Route::resource('faq',FaqController::class);
