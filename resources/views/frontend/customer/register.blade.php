@@ -69,12 +69,12 @@
                                 </div>
                             </div>
                             <div class="wpo-accountForm form-style">
-                            @if (session('success'))
-                                <div class="alert alert-success">{{ session('success') }}</div>
-                            @endif
-                            @if (session('verified'))
-                                <div class="alert alert-success">{{ session('verified') }}</div>
-                            @endif
+                                @if (session('success'))
+                                    <div class="alert alert-success">{{ session('success') }}</div>
+                                @endif
+                                @if (session('verified'))
+                                    <div class="alert alert-success">{{ session('verified') }}</div>
+                                @endif
                                 <div class="fromTitle">
                                     <h2>Signup</h2>
                                     <p>Sign into your pages account</p>
@@ -127,6 +127,22 @@
                                             @enderror
                                         </div>
                                     </div>
+                                    <div class="form-group mt-4 mb-4">
+                                        <div class="captcha">
+                                            <span>{!! captcha_img() !!}</span>
+                                            <button type="button" class="btn btn-danger" class="reload"
+                                                id="reload">
+                                                &#x21bb;
+                                            </button>
+                                        </div>
+                                        @error('captcha')
+                                            <strong class="text-danger">{{ $message }}</strong>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group mb-4">
+                                        <input id="captcha" type="text" class="form-control"
+                                            placeholder="Enter Captcha" name="captcha">
+                                    </div>
                                     <div class="col-lg-12 col-md-12 col-12">
                                         <button type="submit" class="wpo-accountBtn">Signup</button>
                                     </div>
@@ -155,6 +171,17 @@
     <script src="{{ asset('front') }}/js/jquery-plugin-collection.js"></script>
     <!-- Custom script for this template -->
     <script src="{{ asset('front') }}/js/script.js"></script>
+    <script type="text/javascript">
+        $('#reload').click(function() {
+            $.ajax({
+                type: 'GET',
+                url: '/reload-captcha',
+                success: function(data) {
+                    $(".captcha span").html(data.captcha);
+                }
+            });
+        });
+    </script>
 </body>
 
 

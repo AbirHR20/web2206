@@ -29,7 +29,8 @@
                                 <div class="shop-filter-search">
                                     <form>
                                         <div>
-                                            <input id="search-input2" type="text" class="form-control" placeholder="Search..">
+                                            <input id="search-input2" type="text" class="form-control"
+                                                placeholder="Search..">
                                             <button class="search-btn2" type="button"><i class="ti-search"></i></button>
                                         </div>
                                     </form>
@@ -41,14 +42,17 @@
                                 <h2>Shop by Categotry</h2>
                                 <ul>
                                     @foreach ($categories as $category)
-                                    <li>
-                                        <label class="topcoat-radio-button__label">
-                                            {{ $category->category_name }} <span>({{ App\Models\Product::where('category_id',$category->id)->count() }})</span>
-                                            <input {{ $category->id == @$_GET['category_id']?'checked':'' }} name="category_id" type="radio" name="topcoat2" class="category_id" value="{{ $category->id }}">
-                                            <span class="topcoat-radio-button"></span>
-                                        </label>
-                                    </li>    
-                                    @endforeach                                  
+                                        <li>
+                                            <label class="topcoat-radio-button__label">
+                                                {{ $category->category_name }}
+                                                <span>({{ App\Models\Product::where('category_id', $category->id)->count() }})</span>
+                                                <input {{ $category->id == @$_GET['category_id'] ? 'checked' : '' }}
+                                                    name="category_id" type="radio" name="topcoat2" class="category_id"
+                                                    value="{{ $category->id }}">
+                                                <span class="topcoat-radio-button"></span>
+                                            </label>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -59,22 +63,25 @@
                                     <div class="priceFilterSlider">
                                         <form action="#" method="get" class="clearfix">
                                             <!-- <div id="sliderRange"></div>
-                                                    <div class="pfsWrap">
-                                                        <label>Price:</label>
-                                                        <span id="amount"></span>
-                                                    </div> -->
+                                                        <div class="pfsWrap">
+                                                            <label>Price:</label>
+                                                            <span id="amount"></span>
+                                                        </div> -->
                                             <div class="d-flex">
                                                 <div class="col-lg-6 pe-2">
                                                     <label for="" class="form-label">Min</label>
-                                                    <input id="min" value="{{ @$_GET['min'] }}" type="text" class="form-control" placeholder="Min amount">
+                                                    <input id="min" value="{{ @$_GET['min'] }}" type="text"
+                                                        class="form-control" placeholder="Min amount">
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <label for="" class="form-label">Max</label>
-                                                    <input id="max" value="{{ @$_GET['max'] }}" type="text" class="form-control" placeholder="Max amount">
+                                                    <input id="max" value="{{ @$_GET['max'] }}" type="text"
+                                                        class="form-control" placeholder="Max amount">
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 mt-4">
-                                                <button type="button" id="price_range" class="form-control bg-light search-btn">Submit</button>
+                                                <button type="button" id="price_range"
+                                                    class="form-control bg-light search-btn">Submit</button>
                                             </div>
                                         </form>
                                     </div>
@@ -86,14 +93,17 @@
                                 <h2>Color</h2>
                                 <ul>
                                     @foreach ($colors as $color)
-                                    <li>
-                                        <label class="topcoat-radio-button__label">
-                                            {{ $color->color_name }} <span>({{ App\Models\Inventory::where('color_id',$color->id)->count() }})</span>
-                                            <input type="radio" name="color_id" class="color_id" value="{{ $color->id }}" {{ $color->id == @$_GET['color_id']?'checked':'' }}>
-                                            <span class="topcoat-radio-button"></span>
-                                        </label>
-                                    </li>    
-                                    @endforeach                                   
+                                        <li>
+                                            <label class="topcoat-radio-button__label">
+                                                {{ $color->color_name }}
+                                                <span>({{ App\Models\Inventory::where('color_id', $color->id)->count() }})</span>
+                                                <input type="radio" name="color_id" class="color_id"
+                                                    value="{{ $color->id }}"
+                                                    {{ $color->id == @$_GET['color_id'] ? 'checked' : '' }}>
+                                                <span class="topcoat-radio-button"></span>
+                                            </label>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -102,14 +112,16 @@
                                 <h2>Size</h2>
                                 <ul>
                                     @foreach ($sizes as $size)
-                                    <li>
-                                        <label class="topcoat-radio-button__label">
-                                            {{ $size->size_name }} <span>({{ App\Models\Inventory::where('size_id',$size->id)->count() }})</span>
-                                            <input type="radio" class="size_id" name="size_id"  value="{{ $size->id }}"{{ $size->id == @$_GET['size_id']?'checked':'' }}>
-                                            <span class="topcoat-radio-button"></span>
-                                        </label>
-                                    </li>    
-                                    @endforeach                                   
+                                        <li>
+                                            <label class="topcoat-radio-button__label">
+                                                {{ $size->size_name }}
+                                                <span>({{ App\Models\Inventory::where('size_id', $size->id)->count() }})</span>
+                                                <input type="radio" class="size_id" name="size_id"
+                                                    value="{{ $size->id }}"{{ $size->id == @$_GET['size_id'] ? 'checked' : '' }}>
+                                                <span class="topcoat-radio-button"></span>
+                                            </label>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -118,13 +130,15 @@
                                 <h2>Popular Tags</h2>
                                 <ul>
                                     @foreach ($tags as $tag)
-                                    <li>
-                                        <label class="topcoat-radio-button__label">
-                                            {{ $tag->tag }}
-                                            <input name="tag_id" type="radio" name="topcoat2" class="tag_id" value="{{ $tag->id }}" {{ $tag->id == @$_GET['tag_id']?'checked':'' }}>
-                                            <span class="topcoat-radio-button"></span>
-                                        </label>
-                                    </li>    
+                                        <li>
+                                            <label class="topcoat-radio-button__label">
+                                                {{ $tag->tag }}
+                                                <input name="tag_id" type="radio" name="topcoat2" class="tag_id"
+                                                    value="{{ $tag->id }}"
+                                                    {{ $tag->id == @$_GET['tag_id'] ? 'checked' : '' }}>
+                                                <span class="topcoat-radio-button"></span>
+                                            </label>
+                                        </li>
                                     @endforeach
                                 </ul>
                             </div>
@@ -157,17 +171,21 @@
                                 <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12">
                                     <div class="product-item">
                                         <div class="image">
-                                            <img src="{{ asset('uploads/product/preview') }}/{{ $product->preview }}" alt="" height="200">
+                                            <img src="{{ asset('uploads/product/preview') }}/{{ $product->preview }}"
+                                                alt="" height="200">
                                             <div class="tag new">New</div>
                                         </div>
                                         <div class="text">
-                                            <h2>@if (Str::length($product->product_name) > 20)
-                                                <a title="{{ $product->product_name }}"
-                                                    href="{{ route('products.details',$product->slug) }}">{{ Str::substr($product->product_name, 0, 20) . '...' }}</a>
-                                            @else
-                                                <a title="{{ $product->product_name }}"
-                                                    href="{{ route('products.details',$product->slug) }}">{{ $product->product_name }}</a>
-                                            @endif</a></h2>
+                                            <h2>
+                                                @if (Str::length($product->product_name) > 20)
+                                                    <a title="{{ $product->product_name }}"
+                                                        href="{{ route('products.details', $product->slug) }}">{{ Str::substr($product->product_name, 0, 20) . '...' }}</a>
+                                                @else
+                                                    <a title="{{ $product->product_name }}"
+                                                        href="{{ route('products.details', $product->slug) }}">{{ $product->product_name }}</a>
+                                                @endif
+                                                </a>
+                                            </h2>
                                             <div class="rating-product">
                                                 <i class="fi flaticon-star"></i>
                                                 <i class="fi flaticon-star"></i>
@@ -177,16 +195,19 @@
                                                 <span>130</span>
                                             </div>
                                             <div class="price">
-                                                <span class="present-price">&#2547;{{ number_format($product->after_product_discount) }}</span>
-                                                <del class="old-price">&#2547;{{ number_format($product->product_price) }}</del>
+                                                <span
+                                                    class="present-price">&#2547;{{ number_format($product->after_product_discount) }}</span>
+                                                <del
+                                                    class="old-price">&#2547;{{ number_format($product->product_price) }}</del>
                                             </div>
                                             <div class="shop-btn">
-                                                <a class="theme-btn-s2" href="{{ route('products.details',$product->slug) }}">Shop Now</a>
+                                                <a class="theme-btn-s2"
+                                                    href="{{ route('products.details', $product->slug) }}">Shop Now</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                @empty
+                            @empty
                                 <h3>No product Found!</h3>
                             @endforelse
 
@@ -197,4 +218,38 @@
         </div>
     </div>
     <!-- product-area-end -->
+@endsection
+@section('footer_script')
+    <script>
+        $('.color_id').click(function() {
+            var top_cate = $('#top-cate').val();
+            var search_input = $('#search_input').val();
+            var category_id = $("input[type='radio'][name='category_id']:checked").val();
+            var min = $('#min').val();
+            var max = $('#max').val();
+            var sorting = $('.sorting').val();
+            var color_id = $("input[type='radio'][name='color_id']:checked").val();
+            var size_id = $("input[type='radio'][name='size_id']:checked").val();
+            var tag_id = $("input[type='radio'][name='tag_id']:checked").val();
+            var link = "{{ route('shop') }}" + "?search_input=" + search_input + "&category_id=" + category_id +
+                "&category2_id=" + top_cate + "&min=" + min + "&max=" + max + "&sorting=" + sorting + "&color_id=" +
+                color_id + "&size_id=" + size_id + "&tag_id=" + tag_id;
+            window.location.href = link;
+        });
+        $('.size_id').click(function() {
+            var top_cate = $('#top-cate').val();
+            var search_input = $('#search_input').val();
+            var category_id = $("input[type='radio'][name='category_id']:checked").val();
+            var min = $('#min').val();
+            var max = $('#max').val();
+            var sorting = $('.sorting').val();
+            var color_id = $("input[type='radio'][name='color_id']:checked").val();
+            var size_id = $("input[type='radio'][name='size_id']:checked").val();
+            var tag_id = $("input[type='radio'][name='tag_id']:checked").val();
+            var link = "{{ route('shop') }}" + "?search_input=" + search_input + "&category_id=" + category_id +
+                "&category2_id=" + top_cate + "&min=" + min + "&max=" + max + "&sorting=" + sorting + "&color_id=" +
+                color_id + "&size_id=" + size_id + "&tag_id=" + tag_id;
+            window.location.href = link;
+        });
+    </script>
 @endsection

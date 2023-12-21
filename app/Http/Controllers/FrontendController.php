@@ -12,7 +12,9 @@ use App\Models\Subcategory;
 use App\Models\Tag;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 
 class FrontendController extends Controller
 {
@@ -51,6 +53,17 @@ class FrontendController extends Controller
         $product_details = Product::find($product_id);
         $avilable_colors = Inventory::where('product_id', $product_id)->groupBy('color_id')->selectRaw('count(*) as total,color_id')->get();
         $avilable_sizes = Inventory::where('product_id', $product_id)->groupBy('size_id')->selectRaw('count(*) as total,size_id')->get();
+
+        //recent view
+        $cookie_info = Cookie::get('recent_view');
+        if (!$cookie_info) {
+            $cookie_info = "[]";
+        }
+        $all_info = json_decode($cookie_info,true);
+        $all_info = Arr::prepend($all_info,$product_id);
+        $recent_viewed_id = json_encode($all_info);
+        Cookie::queue('recent_view',$recent_viewed_id, 1000);
+
         return view('frontend.product_details', [
             'product_details' => $product_details,
             'avilable_colors' => $avilable_colors,
@@ -180,6 +193,19 @@ class FrontendController extends Controller
             'colors' => $colors,
             'sizes' => $sizes,
             'tags' => $tags,
+        ]);
+    }
+    function recent_view() {
+        $recent_view = json_decode(Cookie::get('recent_view'));
+        if ($recent_view == NULL) {
+            $recent_view = [];
+            $after_unique = array_unique($recent_view);
+        } else {
+            $after_unique = array_unique($recent_view);
+        }
+        $recent_viewed_product = Product::find($after_unique);
+        return view('frontend.recent_view',[
+            'recent_viewed_product'=>$recent_viewed_product,
         ]);
     }
 }

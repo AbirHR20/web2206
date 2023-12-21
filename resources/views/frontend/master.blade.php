@@ -139,53 +139,29 @@
                                     <li>
                                         <div class="header-wishlist-form-wrapper">
                                             <button class="wishlist-toggle-btn"> <i class="fi flaticon-heart"></i>
-                                                <span class="cart-count">3</span></button>
+                                                <span class="cart-count">{{ App\Models\wishlist::where('customer_id', Auth::guard('customer')->id())->count() }}</span></button>
                                             <div class="mini-wislist-content">
                                                 <button class="mini-cart-close"><i class="ti-close"></i></button>
                                                 <div class="mini-cart-items">
+                                                    @foreach (App\Models\wishlist::where('customer_id', Auth::guard('customer')->id())->get() as $wishlist)                                                       
                                                     <div class="mini-cart-item clearfix">
                                                         <div class="mini-cart-item-image">
                                                             <a href="product.html"><img
-                                                                    src="{{ asset('front') }}/images/cart/img-1.jpg"
+                                                                    src="{{ asset('uploads/product/preview') }}/{{ $wishlist->rel_to_product->preview }}"
                                                                     alt></a>
                                                         </div>
                                                         <div class="mini-cart-item-des">
-                                                            <a href="product.html">Stylish Pink Coat</a>
-                                                            <span class="mini-cart-item-price">$150</span>
-                                                            <span class="mini-cart-item-quantity"><a href="#"><i
+                                                            <a href="{{ route('products.details',$wishlist->rel_to_product->slug) }}" title="{{ $wishlist->rel_to_product->product_name }}">{{ Str::substr($wishlist->rel_to_product->product_name, 0, 10) . '...' }}</a>
+                                                            <span class="mini-cart-item-price">${{ $wishlist->rel_to_product->after_product_discount }}</span>
+                                                            <span class="mini-cart-item-quantity"><a href="{{ route('wishlist.remove',$wishlist->id) }}"><i
                                                                         class="ti-close"></i></a></span>
                                                         </div>
                                                     </div>
-                                                    <div class="mini-cart-item clearfix">
-                                                        <div class="mini-cart-item-image">
-                                                            <a href="product.html"><img
-                                                                    src="{{ asset('front') }}/images/cart/img-2.jpg"
-                                                                    alt></a>
-                                                        </div>
-                                                        <div class="mini-cart-item-des">
-                                                            <a href="product.html">Blue Bag</a>
-                                                            <span class="mini-cart-item-price">$120</span>
-                                                            <span class="mini-cart-item-quantity"><a href="#"><i
-                                                                        class="ti-close"></i></a></span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="mini-cart-item clearfix">
-                                                        <div class="mini-cart-item-image">
-                                                            <a href="product.html"><img
-                                                                    src="{{ asset('front') }}/images/cart/img-3.jpg"
-                                                                    alt></a>
-                                                        </div>
-                                                        <div class="mini-cart-item-des">
-                                                            <a href="product.html">Kids Blue Shoes</a>
-                                                            <span class="mini-cart-item-price">$120</span>
-                                                            <span class="mini-cart-item-quantity"><a href="#"><i
-                                                                        class="ti-close"></i></a></span>
-                                                        </div>
-                                                    </div>
+                                                    @endforeach
                                                 </div>
                                                 <div class="mini-cart-action clearfix">
                                                     <div class="mini-btn">
-                                                        <a href="wishlist.html" class="view-cart-btn">View
+                                                        <a href="{{ route('wishlist') }}" class="view-cart-btn">View
                                                             Wishlist</a>
                                                     </div>
                                                 </div>
@@ -316,7 +292,7 @@
                             </div>
                             <div class="col-lg-2 col-md-1 col-1">
                                 <div class="header-right">
-                                    <a href="recent-view.html" class="recent-btn"><i class="fi flaticon-refresh"></i>
+                                    <a href="{{ route('recent.view') }}" class="recent-btn"><i class="fi flaticon-refresh"></i>
                                         <span>Recently Viewed</span>
                                     </a>
                                 </div>
@@ -519,36 +495,6 @@
             window.location.href = link;
         });
         $('.category_id').click(function() {
-            var top_cate = $('#top-cate').val();
-            var search_input = $('#search_input').val();
-            var category_id = $("input[type='radio'][name='category_id']:checked").val();
-            var min = $('#min').val();
-            var max = $('#max').val();
-            var sorting = $('.sorting').val();
-            var color_id = $("input[type='radio'][name='color_id']:checked").val();
-            var size_id = $("input[type='radio'][name='size_id']:checked").val();
-            var tag_id = $("input[type='radio'][name='tag_id']:checked").val();
-            var link = "{{ route('shop') }}" + "?search_input=" + search_input + "&category_id=" + category_id +
-                "&category2_id=" + top_cate + "&min=" + min + "&max=" + max + "&sorting=" + sorting + "&color_id=" +
-                color_id + "&size_id=" + size_id + "&tag_id=" + tag_id;
-            window.location.href = link;
-        });
-        $('.color_id').click(function() {
-            var top_cate = $('#top-cate').val();
-            var search_input = $('#search_input').val();
-            var category_id = $("input[type='radio'][name='category_id']:checked").val();
-            var min = $('#min').val();
-            var max = $('#max').val();
-            var sorting = $('.sorting').val();
-            var color_id = $("input[type='radio'][name='color_id']:checked").val();
-            var size_id = $("input[type='radio'][name='size_id']:checked").val();
-            var tag_id = $("input[type='radio'][name='tag_id']:checked").val();
-            var link = "{{ route('shop') }}" + "?search_input=" + search_input + "&category_id=" + category_id +
-                "&category2_id=" + top_cate + "&min=" + min + "&max=" + max + "&sorting=" + sorting + "&color_id=" +
-                color_id + "&size_id=" + size_id + "&tag_id=" + tag_id;
-            window.location.href = link;
-        });
-        $('.size_id').click(function() {
             var top_cate = $('#top-cate').val();
             var search_input = $('#search_input').val();
             var category_id = $("input[type='radio'][name='category_id']:checked").val();

@@ -125,12 +125,24 @@
                                         <input name="quantity" class="text-value" type="text" value="1">
                                     </div>
                                     @auth('customer')
-                                        <button type="submit" class="cart-btn theme-btn-s2">Add to cart</button>
+                                        <button name="btn" value="1" type="submit" class="cart-btn theme-btn-s2">Add
+                                            to cart</button>
                                     @else
                                         <a href="{{ route('customer.login') }}" class="theme-btn-s2">Add to cart</a>
                                     @endauth
-                                    <a href="#" class="wl-btn"><i class="fi flaticon-heart"></i></a>
+
+                                    @auth('customer')
+                                        <button name="btn" value="2" type="submit" class="wl-btn"><i
+                                                class="fi flaticon-heart"></i></button>
+                                    @else
+                                        <a href="{{ route('customer.login') }}" class="wl-btn"><i
+                                                class="fi flaticon-heart"></i></a>
+                                    @endauth
+
                                 </div>
+                                @if (session('out'))
+                                   <strong class="text-danger my-3">{{ session('out') }}</strong> 
+                                @endif
                                 <input type="hidden" name="product_id" value="{{ $product_details->id }}">
                                 <ul class="important-text">
                                     <li><span>SKU:</span>FTE569P</li>
@@ -395,6 +407,17 @@
                 position: 'top-end',
                 icon: 'success',
                 title: '{{ session('cart_added') }}',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        </script>
+    @endif
+    @if (session('wish_added'))
+        <script>
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: '{{ session('wish_added') }}',
                 showConfirmButton: false,
                 timer: 1500
             })

@@ -22,7 +22,9 @@ use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WishListController;
 use App\Models\Subscriber;
+use App\Models\wishlist;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,6 +45,7 @@ Route::get('/subcategory/products/{id}',[FrontendController::class,'subcategory_
 Route::get('/product/details/{slug}',[FrontendController::class,'products_details'])->name('products.details');
 Route::post('/getSize',[FrontendController::class,'getSize']);
 Route::post('/getQuantity',[FrontendController::class,'getQuantity']);
+Route::get('/recent/view',[FrontendController::class,'recent_view'])->name('recent.view');
 
 Route::get('/dashboard', [HomeController::class,'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -120,6 +123,7 @@ Route::get('/customer/logout',[CustomerController::class,'customer_logout'])->na
 Route::post('/customer/profile/update',[CustomerController::class,'customer_profile_update'])->name('customer.profile.update');
 Route::get('/customer/order',[CustomerController::class,'customer_order'])->name('customer.order');
 Route::get('/cancel/order/{id}',[CustomerController::class,'cancel_order'])->name('cancel.order');
+Route::get('/reload-captcha', [CustomerAuthController::class, 'reloadCaptcha']);
 
 //cart
 Route::post('/cart/store',[CartController::class,'cart_store'])->name('cart.store');
@@ -201,3 +205,8 @@ Route::get('/tag/remove/{id}', [TagController::class, 'tag_remove'])->name('tag.
 
 //faq
 Route::resource('faq',FaqController::class);
+
+//wishlist
+Route::get('/wishlist/remove/{id}', [WishListController::class, 'wishlist_remove'])->name('wishlist.remove');
+Route::get('/wishlist', [WishListController::class, 'wishlist'])->name('wishlist');
+Route::get('/wishlist/to/cart/{id}', [WishListController::class, 'wish_cart'])->name('wish.cart');

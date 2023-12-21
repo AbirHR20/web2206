@@ -32,6 +32,7 @@ class CustomerAuthController extends Controller
                 ->numbers()
                 ->symbols(),
             'password_confirmation' => 'required',
+            'captcha' => 'required|captcha',
         ]);
 
         $customer_id = customer::insertGetId([
@@ -50,6 +51,10 @@ class CustomerAuthController extends Controller
         ]);
         Notification::send($customer, new CustomerEmailVerifyNotification($email_verify_info));
         return back()->with('success',"Resister success! A verification link sent to $request->email .Please verify login");
+    }
+    public function reloadCaptcha()
+    {
+        return response()->json(['captcha'=> captcha_img()]);
     }
     function customer_login_confirm(Request $request)
     {

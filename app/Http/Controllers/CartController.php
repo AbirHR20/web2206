@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Coupon;
+use App\Models\Inventory;
+use App\Models\wishlist;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,19 +19,46 @@ class CartController extends Controller
             'size_id' => 'required',
         ]);
 
-        if (Cart::where('customer_id', Auth::guard('customer')->id())->where('product_id', $request->product_id)->where('color_id', $request->color_id)->where('size_id', $request->size_id)->exists()) {
-            Cart::where('customer_id', Auth::guard('customer')->id())->where('product_id', $request->product_id)->where('color_id', $request->color_id)->where('size_id', $request->size_id)->increment('quantity', $request->quantity);
-            return back()->with('cart_added', 'Cart Added Sucessfully!');
+        if ($request->btn == 1) {
+            if (Cart::where('customer_id', Auth::guard('customer')->id())->where('product_id', $request->product_id)->where('color_id', $request->color_id)->where('size_id', $request->size_id)->exists()) {
+                Cart::where('customer_id', Auth::guard('customer')->id())->where('product_id', $request->product_id)->where('color_id', $request->color_id)->where('size_id', $request->size_id)->increment('quantity', $request->quantity);
+                return back()->with('cart_added', 'Cart Added Sucessfully!');
+            } else {
+                $quantity = Inventory::where('product_id', $request->product_id)->where('color_id', $request->color_id)->where('size_id', $request->size_id)->first()->quantity;
+                if ($quantity >= $request->quantity) {
+                    Cart::insert([
+                        'customer_id' => Auth::guard('customer')->id(),
+                        'product_id' => $request->product_id,
+                        'color_id' => $request->color_id,
+                        'size_id' => $request->size_id,
+                        'quantity' => $request->quantity,
+                        'created_at' => Carbon::now(),
+                    ]);
+                    return back()->with('cart_added', 'Cart Added Sucessfully!');
+                } else {
+                    return back()->with('out', "Quantity stock on $quantity");
+                }
+            }
         } else {
-            Cart::insert([
-                'customer_id' => Auth::guard('customer')->id(),
-                'product_id' => $request->product_id,
-                'color_id' => $request->color_id,
-                'size_id' => $request->size_id,
-                'quantity' => $request->quantity,
-                'created_at' => Carbon::now(),
-            ]);
-            return back()->with('cart_added', 'Cart Added Sucessfully!');
+            if (wishlist::where('customer_id', Auth::guard('customer')->id())->where('product_id', $request->product_id)->where('color_id', $request->color_id)->where('size_id', $request->size_id)->exists()) {
+                wishlist::where('customer_id', Auth::guard('customer')->id())->where('product_id', $request->product_id)->where('color_id', $request->color_id)->where('size_id', $request->size_id)->increment('quantity', $request->quantity);
+                return back()->with('wish_added', 'Added to wishlist!');
+            } else {
+                $quantity = Inventory::where('product_id', $request->product_id)->where('color_id', $request->color_id)->where('size_id', $request->size_id)->first()->quantity;
+                if ($quantity >= $request->quantity) {
+                    wishlist::insert([
+                        'customer_id' => Auth::guard('customer')->id(),
+                        'product_id' => $request->product_id,
+                        'color_id' => $request->color_id,
+                        'size_id' => $request->size_id,
+                        'quantity' => $request->quantity,
+                        'created_at' => Carbon::now(),
+                    ]);
+                    return back()->with('wish_added', 'Added to wishlist!');
+                } else {
+                    return back()->with('out', "Quantity stock on $quantity");
+                }
+            }
         }
     }
     function cart_remove($id)
