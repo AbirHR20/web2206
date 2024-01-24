@@ -41,6 +41,13 @@ class CheckoutController extends Controller
         $request->validate([
             'payment_method' => 'required',
             'charge' => 'required',
+            'fname'=>'required',
+            'country'=>'required',
+            'city'=>'required',
+            'zip'=>'required',
+            'email'=>'required',
+            'phone'=>'required',
+            'address'=>'required',
         ]);
         if ($request->payment_method == 1) {
             $order_id = '#' . uniqid() . '-' . Carbon::now()->format('Y-m-d');
@@ -52,7 +59,7 @@ class CheckoutController extends Controller
                 'payment_method' => $request->payment_method,
                 'sub_total' => $request->sub_total,
                 'total' => ($request->sub_total + $request->charge) - $request->discount,
-                'created_at' => Carbon::now(),
+                'created_at' => Carbon::today()->toDateString(),
             ]);
             Billing::insert([
                 'order_id' => $order_id,

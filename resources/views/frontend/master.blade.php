@@ -8,7 +8,7 @@
     <meta name="author" content="wpOceans">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" type="image/png" href="{{ asset('front') }}/images/favicon.png">
-    <title>Themart - eCommerce HTML5 Template</title>
+    <title>Themart -  @foreach ( Request::segments() as $segment ){{ ucwords($segment) }}@endforeach </title>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="{{ asset('front') }}/css/themify-icons.css" rel="stylesheet">
     <link href="{{ asset('front') }}/css/font-awesome.min.css" rel="stylesheet">

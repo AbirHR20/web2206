@@ -128,7 +128,7 @@ Route::get('/reload-captcha', [CustomerAuthController::class, 'reloadCaptcha']);
 //cart
 Route::post('/cart/store',[CartController::class,'cart_store'])->name('cart.store');
 Route::get('/cart/remove/{id}',[CartController::class,'cart_remove'])->name('cart.remove');
-Route::get('/cart',[CartController::class,'cart'])->name('cart');
+Route::get('/cart',[CartController::class,'cart'])->middleware('customer')->name('cart');
 Route::post('/cart/update',[CartController::class,'cart_update'])->name('cart.update');
 
 

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Password;
@@ -11,7 +13,44 @@ use Intervention\Image\Facades\Image;
 class HomeController extends Controller
 {
     function dashboard(){
-        return view('dashboard');
+        //sales
+        $sales = Order::where('created_at','>',Carbon::now()->subDays(7))
+        ->groupBy('created_at')
+        ->selectRaw('sum(total) as sum , created_at')->get();
+        $labels2 = '';
+        $data2 = '';
+        foreach ($sales as $key => $sale) {
+            $data2 .= $sale->sum.',';
+            $labels2 .= $sale->created_at->format('D').',';
+        }
+
+        $after_explode_sales_data = explode(',',$data2);
+        $after_explode_sales_labels = explode(',',$labels2);
+        array_pop($after_explode_sales_data);
+        array_pop($after_explode_sales_labels);
+
+        //order
+        $orders = Order::where('created_at','>',Carbon::now()->subDays(7))
+        ->groupBy('created_at')
+        ->selectRaw('count(*) as total , created_at')->get();
+        $labels = '';
+        $data = '';
+        foreach ($orders as $key => $order) {
+            $data .= $order->total.',';
+            $labels .= $order->created_at->format('D').',';
+        }
+
+        $after_explode_orders_data = explode(',',$data);
+        $after_explode_orders_labels = explode(',',$labels);
+        array_pop($after_explode_orders_data);
+        array_pop($after_explode_orders_labels);
+
+        return view('dashboard',[
+            'after_explode_orders_data'=>$after_explode_orders_data,
+            'after_explode_orders_labels'=>$after_explode_orders_labels,
+            'after_explode_sales_data'=>$after_explode_sales_data,
+            'after_explode_sales_labels'=>$after_explode_sales_labels,
+        ]);
     }
     function user_profile(){
         return view('admin.user.user');

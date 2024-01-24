@@ -57,10 +57,16 @@
                                                 <div class="col-lg-6 col-md-12 col-12">
                                                     <input type="text" placeholder="First Name*" id="fname1"
                                                         name="fname" value="{{ Auth::guard('customer')->user()->fname }}">
+                                                    @error('fname')
+                                                        <strong class="text-danger">{{ $message }}</strong>
+                                                    @enderror
                                                 </div>
                                                 <div class="col-lg-6 col-md-12 col-12">
                                                     <input type="text" placeholder="Last Name*" id="fname2"
                                                         name="lname" value="{{ Auth::guard('customer')->user()->lname }}">
+                                                    @error('lname')
+                                                        <strong class="text-danger">{{ $message }}</strong>
+                                                    @enderror
                                                 </div>
                                                 <div class="col-lg-6 col-md-12 col-12">
                                                     <select name="country" id="Country" class="form-control country">
@@ -70,15 +76,25 @@
                                                             </option>
                                                         @endforeach
                                                     </select>
+                                                    @error('country')
+                                                        <strong class="text-danger">{{ $message }}</strong>
+                                                    @enderror
                                                 </div>
                                                 <div class="col-lg-6 col-md-12 col-12">
                                                     <select name="city" id="City" class="form-control city">
-                                                        <option disabled="" selected="" value="">Select city</option>
+                                                        <option disabled="" selected="" value="">Select city
+                                                        </option>
                                                     </select>
+                                                    @error('city')
+                                                        <strong class="text-danger">{{ $message }}</strong>
+                                                    @enderror
                                                 </div>
                                                 <div class="col-lg-6 col-md-12 col-12">
                                                     <input type="text" placeholder="Postcode / ZIP*" id="Post2"
                                                         name="zip" value="{{ Auth::guard('customer')->user()->zip }}">
+                                                    @error('zip')
+                                                        <strong class="text-danger">{{ $message }}</strong>
+                                                    @enderror
                                                 </div>
                                                 <div class="col-lg-6 col-md-12 col-12">
                                                     <input type="text" placeholder="Company Name*" id="Company"
@@ -86,16 +102,26 @@
                                                 </div>
                                                 <div class="col-lg-6 col-md-12 col-12">
                                                     <input type="text" placeholder="Email Address*" id="email4"
-                                                        name="email" value="{{ Auth::guard('customer')->user()->email }}">
+                                                        name="email"
+                                                        value="{{ Auth::guard('customer')->user()->email }}">
+                                                    @error('email')
+                                                        <strong class="text-danger">{{ $message }}</strong>
+                                                    @enderror
                                                 </div>
                                                 <div class="col-lg-6 col-md-12 col-12">
                                                     <input type="text" placeholder="Phone*" id="email2" name="phone"
                                                         value="{{ Auth::guard('customer')->user()->phone }}">
+                                                    @error('phone')
+                                                        <strong class="text-danger">{{ $message }}</strong>
+                                                    @enderror
                                                 </div>
                                                 <div class="col-lg-12 col-md-12 col-12">
                                                     <input type="text" placeholder="Address*" id="Adress"
                                                         name="address"
                                                         value="{{ Auth::guard('customer')->user()->address }}">
+                                                    @error('address')
+                                                        <strong class="text-danger">{{ $message }}</strong>
+                                                    @enderror
                                                 </div>
                                                 <div class="col-lg-12 col-md-12 col-12">
                                                     <div class="note-area">
@@ -248,8 +274,8 @@
                                                             <label for="remove">Cash on Delivery</label>
                                                         </li>
                                                         <li class="">
-                                                            <input id="add" type="radio"
-                                                                name="payment_method" value="2">
+                                                            <input id="add" type="radio" name="payment_method"
+                                                                value="2">
                                                             <label for="add">Pay With SSLCOMMERZ</label>
                                                         </li>
                                                         <li class="">
@@ -265,7 +291,8 @@
                                                 <input type="hidden" name="sub_total"
                                                     value="{{ session('sub_total') }}">
                                                 <input type="hidden" name="discount" value="{{ session('discount') }}">
-                                                <input type="hidden" name="customer_id" value="{{ Auth::guard('customer')->id() }}">
+                                                <input type="hidden" name="customer_id"
+                                                    value="{{ Auth::guard('customer')->id() }}">
                                                 <div id="open6" class="payment-name active">
                                                     <div class="contact-form form-style">
                                                         <div class="row">

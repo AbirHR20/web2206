@@ -608,6 +608,7 @@
             }, 1000);
         });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     @yield('footer_script')
 </body>
 
